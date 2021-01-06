@@ -1,0 +1,26 @@
+<div class="menu-kitchen" style="display: flex;">
+    <ul class="kitchen-categories">
+        {% for category in categories %}
+        <li id="category-{{ category.id }}" value="{{ category.id }}" onclick="changeCategory({{category.id}})">
+            {{ category.category_title }}
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="category-items" style="border-left: 1px solid grey; height: 460px; overflow-y: auto;">
+    </div>
+</div>
+<script>
+    var first_category = $(".kitchen-categories li:first")
+
+    first_category.addClass("category-active")
+
+    $(".category-items").load("/menu/" + first_category.val())
+
+    function changeCategory(id) {
+        $("#category-" + id).addClass("category-active")
+        $("#category-" + id).siblings().removeClass("category-active")
+        $(".category-items").load("/menu/" + id)
+    }
+</script>
+<script>
+</script>

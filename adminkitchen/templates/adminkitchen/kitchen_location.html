@@ -1,0 +1,205 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Kitchen Location {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    #map {
+        height: 50vh;
+    }
+
+    .custom-map-control-button {
+        appearance: button;
+        background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin: 10px;
+        padding: 0 0.5em;
+        height: 40px;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+    }
+
+    .custom-map-control-button:hover {
+        background: #ebebeb;
+    }
+
+    .gmnoprint {
+        display: none;
+    }
+
+    .gm-style .gm-style-iw-d {
+        color: black;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">Kitchen Location</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>
+                            {{ kitchen.kitchen_name }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTsWeYUxULRj8sRROYbG9FwYwv6p_8GDE&map_ids=33564a8c0fe2cdfd&callback=initMap&libraries=&v=weekly"
+    defer></script>
+
+<script>
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+
+    let map, infoWindow, geocoder, marker;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: parseFloat("{{ kitchen.kitchen_latitude }}"), lng: parseFloat("{{ kitchen.kitchen_longitude }}") },
+            zoom: 14,
+            mapId: '33564a8c0fe2cdfd',
+        });
+
+        geocoder = new google.maps.Geocoder();
+
+        infoWindow = new google.maps.InfoWindow({
+            content: "{{kitchen.gmap_address}}",
+        });
+
+        marker = new google.maps.Marker({
+            position: { lat: parseFloat("{{ kitchen.kitchen_latitude }}"), lng: parseFloat("{{ kitchen.kitchen_longitude }}") },
+            map,
+            title: "{{kitchen.kitchen_name}}",
+        });
+
+        marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+        });
+
+        const locationButton = document.createElement("button");
+        locationButton.textContent = "Locate Kitchen";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+            locationButton
+        );
+        locationButton.addEventListener("click", () => {
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+
+                        geocoder.geocode({ location: pos }, (results, status) => {
+                            if (status === "OK") {
+                                if (results[0]) {
+                                    infoWindow.setContent(results[0].formatted_address);
+                                    payload = {
+                                        "kitchen_latitude": position.coords.latitude,
+                                        "kitchen_longitude": position.coords.longitude,
+                                        "gmap_address": results[0].formatted_address
+                                    };
+                                    $.ajax({
+                                        url: "/kitchen_locate/" + "{{ kitchen.id }}",
+                                        type: "PUT",
+                                        dataType: "json",
+                                        data: payload,
+                                        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                        success: function (data) {
+                                            alert("Kitchen located successfully")
+                                        },
+                                        error: function (err) {
+                                            alert(JSON.stringify(err))
+                                        },
+                                    });
+                                } else {
+                                    window.alert("No results found");
+                                }
+                            } else {
+                                window.alert("Geocoder failed due to: " + status);
+                            }
+                        });
+
+                        infoWindow.setPosition(pos);
+                        // infoWindow.setContent("Kitchen Located");
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+
+
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        });
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+                ? "Error: The Geolocation service failed."
+                : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(map);
+    }
+
+    function geocodeLatLng(geocoder, map, infowindow) {
+        const input = document.getElementById("latlng").value;
+        const latlngStr = input.split(",", 2);
+        const latlng = {
+            lat: parseFloat(latlngStr[0]),
+            lng: parseFloat(latlngStr[1]),
+        };
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === "OK") {
+                if (results[0]) {
+                    map.setZoom(11);
+                    const marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
+</script>
+{% endblock javascripts %}

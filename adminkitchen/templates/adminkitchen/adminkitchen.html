@@ -1,0 +1,112 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Kitchen {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    .form-group {
+        width: 50%;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .form-group {
+            width: 100%;
+        }
+    }
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        color: black !important;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">Kitchen Details</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>
+                            {{ kitchen.kitchen_name }}
+                        </span>
+                    </div>
+                </div>
+
+                <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="kitchen_name">Kitchen Name</label>
+                        <input type="text" value="{{ kitchen.kitchen_name }}" id="kitchen_name" name="kitchen_name"
+                            class="form-control" disabled>
+                    </div>
+                    <div id="div_id_kitchen_logo" class="form-group"> <label for="id_kitchen_logo"
+                            class=" requiredField">
+                            Kitchen logo<span class="asteriskField">*</span> </label>
+                        <div class="">
+                            Currently: <a href="{{ kitchen.kitchen_logo.url }}">{{ kitchen.kitchen_logo }}</a><br>
+                            Change:
+                            <input type="file" name="kitchen_logo" class="clearablefileinput form-control-file"
+                                id="id_kitchen_logo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="about">About</label>
+                        <textarea class="form-control" rows="10" id="about" name="about">{{ kitchen.about }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="number" value="{{ kitchen.contact }}" id="contact" name="contact"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address_line_1">Address Line 1</label>
+                        <input type="text" value="{{ kitchen.address_line_1 }}" id="address_line_1"
+                            name="address_line_1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address_line_2">Address Line 2</label>
+                        <input type="text" value="{{ kitchen.address_line_2 }}" id="address_line_2"
+                            name="address_line_2" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="fb_link">Facebook Link</label>
+                        <input type="url" value="{{ kitchen.fb_link }}" id="fb_link" name="fb_link"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="insta_link">Instagram Link</label>
+                        <input type="url" value="{{ kitchen.insta_link }}" id="insta_link" name="insta_link"
+                            class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenAroma</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Barlow+Condensed:100,300,400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Montserrat:400,400italic,500,700,700italic,900'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <style>
+        #partitioned {
+            padding-left: 12px;
+            letter-spacing: 40px;
+            border: 0;
+            background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 50px 1px;
+            background-repeat: repeat-x;
+            background-position-x: 35px;
+            width: 220px;
+            min-width: 220px;
+            font-size: 18px;
+        }
+
+        #partitioned:focus,
+        #partitioned:active {
+            outline: none;
+        }
+
+        #divInner {
+            left: 0;
+            position: sticky;
+        }
+
+        #divOuter {
+            width: 190px;
+            overflow: hidden
+        }
+    </style>
+    <style>
+        #otp-input {
+            padding-left: 15px;
+            letter-spacing: 42px;
+            border: 0;
+            background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 55px 1px;
+            background-repeat: repeat-x;
+            background-position-x: 35px;
+            width: 200px;
+            font-size: 20px;
+        }
+
+        #otp-input:active,
+        #otp-input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login_card">
+        <img src="{% static 'images/kitchenaroma_logo_cropped.png' %}" alt="" style="width: 120px;">
+        <p style="margin-top: 10px;">Enter OTP</p>
+        <p style="font-size: 18px; margin-top: 10px; text-align: center;">You will receive your OTP in your
+            registered email</p>
+        <form action="" method="POST" style="display: flex; flex-direction: column; align-items: center">
+            {% csrf_token %}'
+            <div id="divOuter">
+                <div id="divInner">
+                    <input name="otp" id="partitioned" type="number" oninput="checkOTP()" />
+                </div>
+            </div>
+            <button id="btn-otp" type="submit">Submit</button>
+        </form>
+        <span class="span-register"><a href="/login">Go back to login</a></span>
+        <span style="font-size: 18px; color: rgb(237, 90, 107); margin-top: 10px;">{{ error }}</span>
+    </div>
+    <script>
+        function checkOTP() {
+            var number = $("#partitioned").val()
+
+            if (number.length > 4) {
+                var output = []
+                var s_number = number.toString()
+
+                for (var i = 0, len = 4; i < len; i += 1) {
+                    output.push(+s_number.charAt(i));
+                }
+
+                var replace_number = output.join("")
+
+                $("#partitioned").val(parseInt(replace_number))
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{ kitchen.kitchen_name }} Category Index {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    .form-group {
+        width: 50%;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .form-group {
+            width: 100%;
+        }
+    }
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        color: black !important;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{ kitchen.kitchen_name }} Category Index</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>
+                            {{ kitchen.kitchen_name }} Category Index
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="basic-datatables" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for category in categories %}
+                                <tr>
+                                    <td>
+                                        <a href="/category_edit/{{ category.id }}"
+                                            style="text-decoration: none; color: white;">
+                                            {{ category.category_title }}
+                                        </a>
+                                    </td>
+                                    <td>{{ category.active }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $('#basic-datatables').DataTable({
+    });
+</script>
+{% endblock javascripts %}

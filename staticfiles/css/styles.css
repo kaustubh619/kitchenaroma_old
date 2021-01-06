@@ -1,0 +1,164 @@
+@font-face {
+	font-family: 'mfn-icons';
+	src: url(../fonts/mfn-icons.eot);
+	src: url(../fonts/mfn-icons.eot) format("embedded-opentype"), url(../fonts/mfn-icons.woff) format("woff"), url(../fonts/mfn-icons.ttf) format("truetype"), url(../fonts/mfn-icons.svg) format("svg");
+	font-weight: 400;
+	font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.701), rgba(128, 128, 128, 0.701)), url(../images/bg_new.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    top: 0px;
+    left: 0px;
+    visibility: inherit;
+    z-index: 20;
+}
+
+.login_card {
+    font-family: "Barlow Condensed", Arial, Tahoma, sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.login_card p {
+    font-size: 28px;
+    letter-spacing: 2px;
+}
+
+.phone {
+    margin-top: 20px;
+    border-bottom: 1px solid #c7c7c7;
+}
+
+#country_code {
+    display: inline-block;
+    font-size: 22px;
+}
+
+#phone__input {
+    display: inline-block;
+    border: none;
+    padding: 4px 10px;
+    font-size: 22px;
+    width: 142px;
+}
+
+#phone__input:active, #phone__input:focus {
+    outline: none;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+#btn-otp {
+    margin-top: 20px;
+    font-size: 18px;
+    padding: 8px 16px;
+    background: #fe9a65;
+    cursor: pointer;
+    border: none;
+    color: white;
+    width: 175px;
+}
+
+#phone__input::-webkit-input-placeholder {
+    padding-left: 13px;
+  }
+
+#phone__input:-moz-placeholder {
+    line-height: 1.5em;
+    padding-left: 13px;
+}
+
+#phone__input::-moz-placeholder {
+    line-height: 1.5em;
+    padding-left: 13px;
+ }
+
+#phone__input:-ms-input-placeholder {
+    line-height: 1.5em;
+    padding-left: 13px;
+}
+
+.span-register {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.span-register a {
+    color:#fe9a65;
+    text-decoration: none!important;
+}
+
+#btn-otp:active, #btn-otp:focus {
+    outline: none;
+}
+
+.form-group {
+    position: relative;
+    margin-top: 30px;
+}
+
+.form-label {
+    position: absolute;
+    left: 0;
+    top: 8px;
+    color: #999;
+    background-color: #fff;
+    z-index: 10;
+    transition: transform 150ms ease-out, font-size 150ms ease-out;
+    font-size: 20px;
+}
+
+.focused .form-label {
+    transform: translateY(-125%);
+    font-size: 0.75em;
+}
+
+.form-input {
+    position: relative;
+    padding: 12px 0px 5px 0;
+    width: 320px;
+    outline: 0;
+    border: 0;
+    box-shadow: 0 1px 0 0 #e5e5e5;
+    transition: box-shadow 150ms ease-out;
+    font-size: 18px;
+}
+
+.form-input:focus {
+    box-shadow: 0 1px 0 0 #fe9a65;
+}
+
+.form-input.filled {
+    box-shadow: 0 1px 0 0 #fe9a65;
+}

@@ -1,0 +1,95 @@
+<!-- Sidebar -->
+<div class="sidebar sidebar-style-2" data-background-color="dark2">
+	<div class="sidebar-wrapper scrollbar scrollbar-inner">
+		<div class="sidebar-content">
+
+			{% if request.user.is_authenticated %}
+			<div class="user">
+				<div class="avatar-sm float-left mr-2">
+					<img src="{{ kitchen.kitchen_logo.url }}" alt="..." class="avatar-img rounded-circle"
+						style="background-color: white; object-fit: contain;">
+				</div>
+				<div class="info">
+					<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+						<span>
+							{{ kitchen.kitchen_name }}
+							<span class="user-level">{{ request.user.email }} </span>
+							<span class="caret"></span>
+						</span>
+					</a>
+					<div class="clearfix"></div>
+
+					<div class="collapse in" id="collapseExample">
+						<ul class="nav">
+							<!-- <li>
+								<a href="#profile">
+									<span class="link-collapse">My Profile</span>
+								</a>
+							</li> -->
+							<li>
+								<a href="{% url 'logout' %}">
+									<span class="link-collapse">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<ul class="nav nav-primary">
+				<li class="nav-item active">
+					<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+						<i class="fas fa-home"></i>
+						<p>Dashboard</p>
+						<span class="caret"></span>
+					</a>
+					<div class="collapse" id="dashboard">
+						<ul class="nav nav-collapse">
+							<li>
+								<a href="/adminkitchen">
+									<span class="sub-item">Dashboard</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+
+				<!-- <li class="nav-section">
+					<span class="sidebar-mini-icon">
+						<i class="fa fa-ellipsis-h"></i>
+					</span>
+					<h4 class="text-section">Components</h4>
+				</li> -->
+
+				<li class="nav-item">
+					<a data-toggle="collapse" href="#base">
+						<i class="fas fa-layer-group"></i>
+						<p>Components</p>
+						<span class="caret"></span>
+					</a>
+					<div class="collapse" id="base">
+						<ul class="nav nav-collapse">
+							<li>
+								<a href="/kitchen_adminview">
+									<span class="sub-item">Kitchen Details</span>
+								</a>
+							</li>
+							<li>
+								<a href="/category_list">
+									<span class="sub-item">Category Index</span>
+								</a>
+							</li>
+							<li>
+								<a href="/kitchen_location">
+									<span class="sub-item">Kitchen Location</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			{% endif %}
+
+		</div>
+	</div>
+</div>
+<!-- End Sidebar -->

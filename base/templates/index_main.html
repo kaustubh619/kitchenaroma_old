@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="no-js">
+{% load pwa %}
+
+<head>
+    <meta charset="utf-8">
+    <title>KitchenAroma</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {% load static %}
+    {% progressive_web_app_meta %}
+    <link rel="icon" href="{% static 'images/logo_trans.png' %}">
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Barlow+Condensed:100,300,400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Montserrat:400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet' href="{% static 'css/global.css' %}">
+    <link rel='stylesheet' href="{% static 'css/structure.css' %}">
+    <link rel='stylesheet' href="{% static 'css/restaurant5.css' %}">
+    <link rel='stylesheet' href="{% static 'css/custom.css' %}">
+    <link rel='stylesheet' href="{% static 'css/rs6.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .font-responsive {
+            font-size: 38px;
+        }
+
+        @media screen and (max-width:37.5em) {
+            .mobile-responsive {
+                padding: 10px !important;
+                text-align: center;
+            }
+
+            #about {
+                padding-top: 0px !important;
+            }
+        }
+
+        .rev-slidebg {
+            opacity: 0.7 !important;
+        }
+
+        .img-responsive {
+            margin: 10px;
+            width: 300px !important;
+            height: 300px !important;
+            object-fit: contain;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .thumb-responsive {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .btn-small {
+            margin-bottom: 0px !important;
+            font-size: 13px;
+            margin-left: 10px !important;
+        }
+
+        .btn-small:hover {
+            color: white !important;
+        }
+
+        .links {
+            margin-bottom: 20px;
+        }
+
+        .links img {
+            width: 40px;
+        }
+
+        #Footer .footer_copy .one {
+            margin-bottom: 0px !important;
+        }
+
+        @media (min-width: 1240px) and (max-width: 1489px) {
+            .header-open #Wrapper {
+                max-width: 100% !important;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1239px) {
+            #Top_bar .top_bar_left {
+                position: static !important;
+                width: 100% !important;
+            }
+
+            .mobile-header-mini.mobile-mini-mr-lc #Top_bar .logo {
+                position: static;
+                float: none;
+                width: auto;
+                margin: 0px;
+                text-align: center;
+                margin-left: 0;
+                margin-right: 15%;
+            }
+
+            #Top_bar #logo img.logo-mobile {
+                display: inline-block;
+            }
+
+            #Header_creative #Top_bar #logo,
+            #Header_creative #Top_bar .custom-logo-link {
+                height: 60px;
+            }
+        }
+
+        .qty-cst {
+            margin-bottom: 0px !important;
+            width: 30px !important;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+            text-align: center !important;
+            font-size: 16px !important;
+        }
+
+        .icon-cst {
+            background-color: #d16832;
+            padding: 6px;
+            color: white;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        @media screen and (max-width: 37.5em) {
+            .hide-xs {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 75em) {
+            .icon-acrobat {
+                display: none !important;
+            }
+
+            .qty-cst {
+                font-size: 12px !important;
+            }
+
+            .btn-small {
+                font-size: 12px !important;
+            }
+
+            .button_icon {
+                display: none !important;
+            }
+
+            a.button .button_label {
+                padding: 11px 6px !important;
+            }
+
+            .button-flat a.button_left.button .button_label,
+            .button-flat a.button_left.button_large .button_label {
+                font-size: 10px !important;
+            }
+
+            /* .icon-cst {
+                font-size: 10px !important;
+            } */
+
+            .category-title {
+                font-size: 16px !important;
+            }
+
+            .item-name {
+                font-size: 15px !important;
+            }
+
+            .item-description {
+                font-size: 12px !important;
+            }
+        }
+
+        .home_anchor {
+            color: #C19D60;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .home_anchor:hover,
+        .home_anchor:active,
+        .home_anchor:focus {
+            color: #d16832;
+            text-decoration: none;
+        }
+    </style>
+    {% block style %}
+    {% endblock %}
+</head>
+
+<body class="home page-template-default page template-slider color-custom style-simple 
+    button-flat layout-full-width one-page if-zoom no-content-padding no-shadows 
+    header-creative header-open header-rtl header-fw minimalist-header-no 
+    sticky-tb-color ab-hide subheader-both-center menu-link-color menuo-right 
+    menuo-no-borders mobile-tb-hide mobile-side-slide mobile-mini-mr-lc mobile-header-mini">
+
+    {% block header %}
+    {% endblock %}
+    <div id="Wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div id="Side_slide" class="right dark" data-width="250">
+        <div class="close-wrapper">
+            <a href="#" class="close"><i class="icon-cancel-fine"></i></a>
+        </div>
+        <div class="menu_wrapper"></div>
+    </div>
+    <div id="body_overlay"></div>
+
+
+    <!-- JS -->
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="{% static 'js/mfn.menu.js' %}"></script>
+    <script src="{% static 'js/jquery.plugins.js' %}"></script>
+    <script src="{% static 'js/jquery.jplayer.min.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+    <script src="{% static 'js/translate3d.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/revolution.tools.min.js' %}"></script>
+    <script src="{% static 'js/rs6.min.js' %}"></script>
+    <script>
+        var revapi1, tpj;
+        jQuery(function () {
+            tpj = jQuery;
+            if (tpj("#rev_slider_1_1").revolution == undefined) {
+                revslider_showDoubleJqueryError("#rev_slider_1_1");
+            } else {
+                revapi1 = tpj("#rev_slider_1_1").show().revolution({
+                    sliderType: "hero",
+                    sliderLayout: "fullscreen",
+                    visibilityLevels: "1240,1240,778,778",
+                    gridwidth: "1240,1240,778,778",
+                    gridheight: "900,900,800,800",
+                    minHeight: "",
+                    spinner: "spinner7",
+                    editorheight: "900,768,800,720",
+                    responsiveLevels: "1240,1240,778,778",
+                    disableForceFullWidth: true,
+                    disableProgressBar: "on",
+                    navigation: {
+                        onHoverStop: false
+                    },
+                    parallax: {
+                        levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 51, 30],
+                        type: "scroll",
+                        origo: "slidercenter",
+                        speed: 0
+                    },
+                    fallbacks: {
+                        allowHTML5AutoPlayOnAndroid: true
+                    },
+                });
+            }
+        });
+    </script>
+    {% block script %}
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+<style>
+    .mousey {
+        width: 20px;
+        height: 30px;
+        border-radius: 6px;
+        padding: 0 6px;
+        border: 2px solid #fff;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 10;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .scroller {
+        position: relative;
+        left: 50%;
+        top: 6px;
+        margin-left: -2px;
+        width: 4px;
+        height: 4px;
+        background: #C19D60;
+        border-radius: 4px;
+        animation-name: scroll;
+        animation-duration: 2.2s;
+        animation-timing-function: ease-in;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes scroll {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            top: 15px;
+        }
+
+        90% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .text-cart {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    table {
+        border: 1px solid grey;
+        width: 100%;
+        font-size: 14px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    table,
+    table tr th {
+        color: white;
+    }
+
+    td,
+    th {
+        border: 1px solid darkgrey;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+
+    .cart-card {
+        border: 1px solid darkgrey;
+        padding: 10px;
+    }
+
+    .inner-card {
+        border: 1px dashed darkgrey;
+        padding: 10px;
+    }
+
+    .change_phone_number {
+        position: absolute;
+        top: 10000px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: top .3s;
+    }
+
+    .form-underlay {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        background-color: #d7d7d7;
+        z-index: 50;
+    }
+</style>
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover" id="ourmenu"
+    style="min-height:90vh;padding-top:120px;padding-bottom:80px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+    <div class="section_wrapper mcb-section-inner">
+        <div class="wrap mcb-wrap mcb-wrap-sow8b28kb one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-3qzk8dnv2 one column_column">
+                    <div class="column_attr clearfix align_center">
+                        <h6 class="themecolor" style="margin-bottom: 5px;">ORDER FOOD WITH HOME DELIVERY</h6>
+                        <h2 style="color: #fff; text-transform: uppercase;">YOUR CART
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap mcb-wrap-f0n1tegh8 valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="mousey" style="margin-top: 100px;">
+                    <div class="scroller"></div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap mcb-wrap mcb-wrap-c4f6ngpcn one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-s8wggf45t one column_divider">
+                    <hr class="no_line" style="margin:0 auto 50px">
+                    <span class="text-cart">Your Cart <span style="color: #C19D60;">{{ items|length }}
+                            {{ item_word }}</span></span>
+                    {% if cart_bool %}
+                    <div class="row" style="display: flex;">
+                        <div class="col-12 col-md-8" style="padding: 0px 4px!important;">
+                            <table>
+                                <tr>
+                                    <th>Item</th>
+                                    <th class="hide-xs">Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                    <!-- <th>Actions</th> -->
+                                </tr>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item.item.item_name }}</td>
+                                    <td class="hide-xs">&#x20B9; {{ item.item.item_price }}</td>
+                                    <td style="display: flex; justify-content: center; align-items: center;">
+                                        <i class="icon-cst icon-minus" onclick="deacreaseQty('{{ item.item.id }}')"></i>
+                                        <input style="min-width: 40px; height: 36px;" type="number" class="qty-cst"
+                                            id="quantity-{{ item.item.id }}" value={{item.quantity}} disabled
+                                            style="background: transparent; border: none; color: white;">
+                                        <i class="icon-cst icon-plus" onclick="increaseQty('{{ item.item.id }}')"></i>
+                                    </td>
+                                    {% load filtermenuitem %}
+                                    <td>&#x20B9; {% multiply_qty_price item.item.item_price item.quantity %}
+                                    </td>
+                                    <!-- <td>X</td> -->
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <div class="location"
+                                style="border: 1px solid grey; margin-bottom: 20px; padding: 4px 10px;">
+                                <span
+                                    style="color: #C19D60; display: block; font-size: 18px; font-weight: 500;">Delivery
+                                    Location</span>
+                                <span
+                                    style="color: white; display: block; margin-top: 10px;">{{ request.user.gmap_address }}</span>
+                                <a href="/user_location"
+                                    style="display: block; margin-top: 10px; color: #d16832; text-decoration: none;">Change
+                                    Delivery Location</a>
+                            </div>
+                            <div class="phone"
+                                style="position: relative; border: 1px solid grey; margin-bottom: 20px; padding: 4px 10px;">
+                                <div>
+                                    <span
+                                        style="color: #C19D60; display: block; font-size: 18px; font-weight: 500;">Contact
+                                        Number</span>
+                                </div>
+                                <span
+                                    style="color: white; display: block; margin-top: 10px;">{{ request.user.phone_number }}</span>
+                                <a style="display: block; margin-top: 10px; color: #d16832; text-decoration: none;"
+                                    id="change_phone">Change
+                                    Contact Number</a>
+                                <div class="change_phone_number"
+                                    style="border-radius: 3px; background-color: white; padding: 8px 20px; z-index: 100;">
+                                    <form action="" method="POST">{% csrf_token %}
+                                        <div class="form-group">
+                                            <label class="form-label" for="phone" style="color: #C19D60">Contact
+                                                Number</label>
+                                            <input id="phone" class="form-input" type="number" autocomplete="off"
+                                                required name="phone" oninput="checkLength()"
+                                                value="{{ request.user.phone_number }}"
+                                                style="background-color: #f7f7f7;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" style="padding: 4px 10px;">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 cart-card">
+                            <div class="inner-card">
+                                <span class="text-cart" style="color: #C19D60;">Cart Totals</span>
+                                <!-- <div class="text-cart"
+                                    style="font-size: 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+                                    <span>Subtotal</span>
+                                    <span>&#x20B9; {{ total_cost }}</span>
+                                </div> -->
+                                <!-- <hr style="width: 90%; border: 1px solid darkgrey;"> -->
+                                <div class="text-cart"
+                                    style="font-size: 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+                                    <span>Total</span>
+                                    <span>&#x20B9; {{ total_cost }}</span>
+                                </div>
+                                <hr style="width: 90%; border: 1px solid darkgrey;">
+                                <button style="display: block; margin: 30px auto;">PROCEED
+                                    TO CHECKOUT</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-12" style="padding: 0px 4px!important;">
+                        <a href="/" class="home_anchor" style="display: inline-block; margin-top: 10px;">Go Home</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-underlay"></div>
+</div>
+
+<footer id="Footer" class="clearfix">
+    <div class="widgets_wrapper">
+        <div class="container">
+            <div class="column one-second">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">CONTACT US</h6>
+                        <h2>+91 7619144111</h2>
+                        <p>
+                            <a href="#">kitchenaroma21@gmail.com</a>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OPENING SOON</h6>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OUR ADDRESS</h6>
+                        <p>
+                            HSR SECTOR 2,
+                            <br> PARANGI PALYA
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.facebook.com/kitchenaroma21" target="_blank"><img
+                        src="{% static 'images/fb_icon.png' %}" alt="" style="width: 36px;"></a>
+                <a href="https://www.instagram.com/kitchenaroma21/" target="_blank"><img
+                        src="{% static 'images/insta_icon.png' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted ||
+            (typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Handle page restore.
+            window.location.reload();
+        }
+    });
+</script>
+<script>
+    function increaseQty(id) {
+        $("#quantity-" + id).val(parseInt($("#quantity-" + id).val()) + 1)
+        var quantity = $("#quantity-" + id).val()
+        var payload = {
+            item: id,
+            quantity: quantity,
+        };
+        $.ajax({
+            url: "/edit_cart/" + id,
+            type: "PUT",
+            dataType: "json",
+            data: payload,
+            headers: { "X-CSRFToken": $.cookie("csrftoken") },
+            success: function () {
+                window.location.reload()
+            },
+            error: function (err) {
+                alert(JSON.stringify(err))
+            },
+        });
+    }
+
+    function deacreaseQty(id) {
+        console.log($("#quantity-" + id).val())
+        if ($("#quantity-" + id).val() == 1) {
+
+            $.ajax({
+                url: "/edit_cart/" + id,
+                type: "DELETE",
+                dataType: "json",
+                headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                success: function () {
+                    // alert("Item added to cart successfully!")
+                    // window.location.reload();
+                    var total_cart_cost = 0
+                    $.ajax({
+                        url: "/cart_by_user",
+                        type: "GET",
+                        dataType: "json",
+                        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                        success: function (data) {
+                            window.location.reload()
+                        },
+                        error: function (err) {
+                            alert(JSON.stringify(err))
+                        },
+                    });
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                },
+            });
+        }
+        else {
+            $("#quantity-" + id).val(parseInt($("#quantity-" + id).val()) - 1)
+            var quantity = $("#quantity-" + id).val()
+            var payload = {
+                item: id,
+                quantity: quantity,
+            };
+            $.ajax({
+                url: "/edit_cart/" + id,
+                type: "PUT",
+                dataType: "json",
+                data: payload,
+                headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                success: function () {
+                    window.location.reload()
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                },
+            });
+        }
+    }
+
+    function checkLength() {
+        var number = $("#phone").val()
+
+        if (number.length > 10) {
+            var output = []
+            var s_number = number.toString()
+
+            for (var i = 0, len = 10; i < len; i += 1) {
+                output.push(+s_number.charAt(i));
+            }
+
+            var replace_number = output.join("")
+
+            $("#phone").val(parseInt(replace_number))
+        }
+    }
+
+    $("#change_phone").click(() => {
+        $(".change_phone_number").css("top", "50%")
+        $(".wrapper").css("opacity", ".5")
+    })
+</script>
+{% endblock %}

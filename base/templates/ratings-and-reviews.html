@@ -1,0 +1,79 @@
+<div class="row-ratings " style="display: flex;">
+    <div class="col-rating-1" style="position: relative;">
+        <span>{{ average_ratings }}</span>
+        <div class="underlay">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+        </div>
+        <div class="overlay">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+        </div>
+        <div class="ratings-count">
+            <i class="fa fa-user"></i>
+            {{ ratings_and_reviews_obj|length }} total
+        </div>
+    </div>
+    <div class="col-rating-2">
+        <div class="ratings-bar">
+            <p>5</p>
+            <span class="ratings-span" style="background-color: #57bb8a; width: {{five_stars}}px;"></span>
+        </div>
+        <div class="ratings-bar">
+            <p>4</p>
+            <span class="ratings-span" style="background-color: #9ace6a; width: {{four_stars}}px;"></span>
+        </div>
+        <div class="ratings-bar">
+            <p>3</p>
+            <span class="ratings-span" style="background-color: #ffcf02; width: {{three_stars}}px;"></span>
+        </div>
+        <div class="ratings-bar">
+            <p>2</p>
+            <span class="ratings-span" style="background-color: #ff9f02; width: {{two_stars}}px;"></span>
+        </div>
+        <div class="ratings-bar">
+            <p>1</p>
+            <span class="ratings-span" style="background-color: #ff6f31; width: {{one_star}}px;"></span>
+        </div>
+    </div>
+</div>
+<div class="row-ratings-2 mt-5" style="position: relative; max-width: 400px;">
+    {% for obj in ratings_paginated %}
+    <div style="display: block">
+        <span style="color: white; font-size: 18px;"><i class="fa fa-user"></i>
+            {{ obj.user.username }}</span>
+        <div style="position: relative;">
+            <div class="underlay-user-rating" style="position: absolute;">
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <div class="overlay-user-rating" style="position: absolute;">
+                {% load filtermenuitem %}
+                {% get_stars_range obj.ratings as range %}
+                {% for i in range %}
+                <i class="fa fa-star" aria-hidden="true"></i>
+                {% endfor %}
+            </div>
+        </div>
+        <span style="color: white; font-size: 16px; margin-top: 24px; display: block;">{{ obj.reviews }}</span>
+    </div>
+    <br>
+    {% endfor %}
+</div>
+{% if ratings_bool %}
+<a onclick="showMore({{kitchen.id}},{{num}})" style="color: white; cursor: pointer;">View More</a>
+{% endif %}
+
+<script>
+    var width = ({{ average_ratings }} / 5) * 111
+    $(".overlay").css("width", width + "px")
+</script>

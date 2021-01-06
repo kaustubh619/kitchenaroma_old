@@ -1,0 +1,552 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+<style>
+    .nav-kitchen {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .nav-kitchen button {
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        padding: 8px 18px;
+        width: 100%;
+        text-align: center;
+        background-color: transparent !important;
+    }
+
+    .nav-kitchen button:focus {
+        outline: none;
+    }
+
+    .nav-kitchen button {
+        border-bottom: 1px solid grey;
+        white-space: nowrap;
+    }
+
+    .nav-kitchen button:hover {
+        color: #d16832;
+    }
+
+    .nav-kitchen .nav-active {
+        color: #d16832;
+        border-bottom: 3px solid #d16832;
+    }
+
+    .kitchen-categories {
+        margin-top: 10px;
+        width: 25%;
+    }
+
+    .category-items {
+        margin-top: 10px;
+        width: 75%;
+        padding: 10px 24px;
+    }
+
+    @media screen and (max-width:75em) {
+        .kitchen-categories {
+            width: 33%;
+        }
+
+        .category-items {
+            width: 67%;
+        }
+
+        .section_wrapper,
+        .container,
+        .four.columns .widget-area {
+            width: 94% !important;
+        }
+    }
+
+    .kitchen-categories li {
+        color: white;
+        padding: 8px 0px;
+        cursor: pointer;
+    }
+
+    .kitchen-categories .category-active {
+        color: #d16832;
+        border-right: 3px solid #d16832;
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+    }
+
+    .fa-star {
+        color: white;
+        font-size: 20px;
+    }
+
+    .col-rating-1 {
+        min-width: 130px;
+        margin-left: 20px;
+    }
+
+    .col-rating-1 span:nth-child(1) {
+        font-size: 80px;
+        color: white;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .col-rating-1 span:nth-child(1) {
+            font-size: 60px;
+        }
+    }
+
+    .underlay {
+        position: absolute;
+        top: 100%;
+        width: 111px;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 100%;
+        white-space: nowrap;
+        overflow-x: hidden;
+    }
+
+    .overlay .fa-star {
+        color: #d16832;
+    }
+
+    .ratings-count {
+        color: white;
+    }
+
+    .ratings-bar {
+        display: flex;
+    }
+
+    .ratings-bar p {
+        margin: 0px;
+        color: white;
+        padding-top: 6px;
+        margin-right: 2px;
+    }
+
+    .ratings-bar span {
+        letter-spacing: 1px;
+        position: relative;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .ratings-span {
+        width: 180px;
+        height: 16px;
+        border-radius: 16px;
+    }
+
+    @media screen and (min-width: 37.5em) {
+        .col-rating-2 {
+            margin-left: 20px;
+        }
+    }
+
+    .overlay-user-rating .fa-star {
+        color: #d16832;
+    }
+
+    .gallery-image {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+    }
+
+    .kitchen-gallery a {
+        display: inline-block;
+        margin: 10px;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .overlay {
+            top: 80%;
+        }
+
+        .underlay {
+            top: 80%;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+        }
+    }
+
+    @media (min-width: 37.5em) and (max-width: 75em) {
+        .gallery-image {
+            width: 100%;
+            height: 400px;
+        }
+    }
+
+    .input-responsive {
+        width: 60px !important;
+        height: 40px !important;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .input-responsive {
+            width: 30px !important;
+            height: 32px !important;
+        }
+    }
+
+    .add-overlay:active,
+    .add-overlay:focus {
+        outline: none;
+    }
+
+    .cart-view-bottom {
+        position: absolute;
+        top: -60px;
+        background-color: #d16832;
+        width: 100%;
+        z-index: 100;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: top .3s;
+    }
+
+    .cart-view-bottom div {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .cart-view-bottom {
+            justify-content: space-around;
+        }
+    }
+</style>
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/kitchen/{{ kitchen.slug }}" title="BeRestaurant5 - BeTheme"
+                            data-height="212" data-padding="50"><img class="logo-main scale-with-grid"
+                                src="{{ kitchen.kitchen_logo.url }}" data-retina="{{ kitchen.kitchen_logo.url }}"
+                                data-height="212" data-no-retina><img class="logo-sticky scale-with-grid"
+                                src="{{ kitchen.kitchen_logo.url }}" data-retina="{{ kitchen.kitchen_logo.url }}"
+                                data-height="212" data-no-retina><img class="logo-mobile scale-with-grid"
+                                src="{{ kitchen.kitchen_logo.url }}" data-retina="{{ kitchen.kitchen_logo.url }}"
+                                data-height="212" data-no-retina><img class="logo-mobile-sticky scale-with-grid"
+                                src="{{ kitchen.kitchen_logo.url }}" data-retina="{{ kitchen.kitchen_logo.url }}"
+                                data-height="212" data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+                <div class="banner_wrapper">
+                    <h4>+91 {{ kitchen.contact }}</h4>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover" id="ourmenu"
+    style="padding-top:40px;padding-bottom:80px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+    <div class="cart-view-bottom" style="color: white;">
+        <div style="display: flex; flex-direction: column;">
+            <span id="total" style="color: white;"></span>
+            <span id="cart_cost" style="color: white;"></span>
+        </div>
+        <div>
+            <a href="/cart" style="color: white; text-decoration: none;">View Cart</a>
+            <i class="fa fa-arrow-right" aria-hidden="true" style="color: white; font-size: 12px;"></i>
+        </div>
+    </div>
+    <div class="section_wrapper mcb-section-inner">
+        <div class="wrap mcb-wrap mcb-wrap-sow8b28kb one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-3qzk8dnv2 one column_column">
+                    <div class="column_attr clearfix align_center">
+                        <h6 class="themecolor" style="margin-bottom: 5px;">KITCHEN</h6>
+                        <h2 style="color: #fff; text-transform: uppercase;">{{ kitchen.kitchen_name }}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider wrap mcb-wrap mcb-wrap-c4f6ngpcn one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="nav-kitchen">
+                    <button class="nav-active" id="overview">Overview</button>
+                    <button id="order">Order Online</button>
+                    <button id="review">Reviews</button>
+                </div>
+                <div id="content-loader">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="Footer" class="clearfix">
+    <div class="widgets_wrapper">
+        <div class="container">
+            <div class="column one-second">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">CONTACT US</h6>
+                        <h2>+91 {{ kitchen.contact }}</h2>
+                        <p>
+                            <a href="#">{{ kitchen.mail }}</a>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OUR ADDRESS</h6>
+                        <p>
+                            {{ kitchen.address_line_1 }}
+                            <br>{{ kitchen.address_line_2 }}
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copy">
+        <div class="container">
+            <div class="links" style="display: flex; align-items: center; justify-content: space-around;">
+                <div>
+                    {% if kitchen.fb_link %}
+                    <a href="{{ kitchen.fb_link }}" target="_blank"><img src="{% static 'images/fb_icon.png' %}" alt=""
+                            style="width: 36px;"></a>
+                    {% endif %}
+                    {% if kitchen.insta_link %}
+                    <a href="{{ kitchen.insta_link }}" target="_blank"><img src="{% static 'images/insta_icon.png' %}"
+                            alt=""></a>
+                    {% endif %}
+                </div>
+                <div>
+                    <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted ||
+            (typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Handle page restore.
+            window.location.reload();
+        }
+    });
+</script>
+<script>
+    $("#content-loader").load("/overview/" + "{{ kitchen.id }}")
+
+    $("#order").click(() => {
+        $("#content-loader").load("/order-online/" + "{{ kitchen.id }}")
+    })
+
+    $("#review").click(() => {
+        $("#content-loader").load("/ratings-and-reviews/" + "{{ kitchen.id }}" + "/" + 5)
+    })
+
+    $("#overview").click(() => {
+        $("#content-loader").load("/overview/" + "{{ kitchen.id }}")
+    })
+
+    $("#review").click(() => {
+        $("#review").addClass("nav-active")
+        $("#review").siblings().removeClass("nav-active")
+    })
+
+    $("#overview").click(() => {
+        $("#overview").addClass("nav-active")
+        $("#overview").siblings().removeClass("nav-active")
+    })
+
+    $("#order").click(() => {
+        $("#order").addClass("nav-active")
+        $("#order").siblings().removeClass("nav-active")
+    })
+</script>
+
+<script>
+    var kitchen_lat = "{{ kitchen.kitchen_latitude }}"
+    var kitchen_lon = "{{ kitchen.kitchen_longitude }}"
+    var user_lat = "{{ request.user.user_location_latitude }}"
+    var user_lon = "{{ request.user.user_location_longitude }}"
+    var kitchen_cover_radius = "{{ kitchen.cover_radius_in_kms }}"
+
+    function cart_total() {
+        var total_cart_cost = 0
+        $.ajax({
+            url: "/cart_by_user",
+            type: "GET",
+            dataType: "json",
+            headers: { "X-CSRFToken": $.cookie("csrftoken") },
+            success: function (data) {
+                data.map(item => {
+                    total_cart_cost += item.item.item_price * item.quantity
+                    $("#cart_cost").html("&#x20B9;" + total_cart_cost)
+                })
+                if (data.length == 0) {
+                    $(".cart-view-bottom").css("display", "none")
+                }
+                else if (data.length == 1) {
+                    $(".cart-view-bottom").css("display", "flex")
+                    $("#total").html(data.length + " ITEM")
+                }
+                else {
+                    $("#total").html(data.length + " ITEMS")
+                }
+                $(".cart-view-bottom").css("top", "0px")
+            },
+            error: function (err) {
+                alert(JSON.stringify(err))
+            },
+        });
+    }
+
+    function removeOverlay(id) {
+
+        var user = "{{ request.user }}"
+
+        if (user == "AnonymousUser") {
+            alert("Please log in to add items to cart")
+            window.location.href = "/login"
+        }
+
+        else {
+            if (user_lat == "None" || user_lon == "None") {
+                var result = confirm("Please add location for delivery");
+                if (result) {
+                    window.location.href = "/user_location"
+                }
+                else {
+                    return false
+                }
+            }
+            else {
+                var rad = function (x) {
+                    return x * Math.PI / 180;
+                };
+
+                var R = 6378137; // Earth’s mean radius in meter
+                var dLat = rad(kitchen_lat - user_lat);
+                var dLong = rad(kitchen_lon - user_lon);
+                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(rad(user_lat)) * Math.cos(rad(kitchen_lat)) *
+                    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                var d = (R * c) / 1000; // distance between kitchen and user in kilometers
+
+                if (d > kitchen_cover_radius) {
+                    var result = confirm("{{ kitchen.kitchen_name }} does not deliver to your location. Do you want to change your location?");
+                    if (result) {
+                        window.location.href = "/user_location"
+                    }
+                    else {
+                        return false
+                    }
+                }
+
+                else {
+                    $("#block__overlay-" + id).css("top", "40px")
+                    $("#block__underlay-" + id).css("top", "0px")
+                    $("#quantity-" + id).val(1)
+
+                    var quantity = $("#quantity-" + id).val()
+
+                    var payload = {
+                        item: id,
+                        quantity: quantity,
+                    };
+                    $.ajax({
+                        url: "/add_item_to_cart",
+                        type: "POST",
+                        dataType: "json",
+                        data: payload,
+                        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                        success: function () {
+                            var total_cart_cost = 0
+                            $.ajax({
+                                url: "/cart_by_user",
+                                type: "GET",
+                                dataType: "json",
+                                headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                success: function (data) {
+                                    cart_total()
+                                },
+                                error: function (err) {
+                                    alert(JSON.stringify(err))
+                                },
+                            });
+                        },
+                        error: function (err) {
+                            alert(JSON.stringify(err))
+                        },
+                    });
+                }
+            }
+        }
+    }
+
+    function itemAddToCartWithoutAuthentication(id) {
+        alert("Please login to add items to cart!")
+    }
+</script>
+<script>
+    function showMore(id, num) {
+        num = num + num
+        $("#content-loader").load("/ratings-and-reviews/" + id + "/" + parseInt(num))
+    }
+</script>
+
+<script>
+
+</script>
+{% endblock %}

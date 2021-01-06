@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "xyz.appmaker.knakab",
+      "sha256_cert_fingerprints": ["E6:C7:FC:0E:D7:6E:04:E0:7E:F6:A4:27:81:A7:04:E5:58:31:36:D4:06:95:4A:40:41:63:86:8B:2D:70:3C:01"]
+    }
+  }
+]

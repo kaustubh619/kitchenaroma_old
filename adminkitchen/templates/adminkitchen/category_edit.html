@@ -1,0 +1,89 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Category {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    .form-group {
+        width: 50%;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .form-group {
+            width: 100%;
+        }
+    }
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        color: black !important;
+    }
+
+    .form-check [type=checkbox]:checked,
+    .form-check [type=checkbox]:not(:checked) {
+        position: relative !important;
+        left: 0;
+    }
+
+    .form-group label:nth-child(2) {
+        margin-left: 5px !important;
+    }
+
+    .form-group:nth-child(3) {
+        margin-left: 10px;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">Category - {{ category.category_title }}</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>
+                            Category - {{ category.category_title }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <label for="category_title">Category Name</label>
+                            <input type="text" value="{{ category.category_title }}" id="category_title"
+                                name="category_title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" class="form-control" name="active" id="active"
+                                style="width: 13px; display: inline; cursor: pointer;" {{ checked }}>
+                            <span style="margin-left: 5px;">Active</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-outline-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

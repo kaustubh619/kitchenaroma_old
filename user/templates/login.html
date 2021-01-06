@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenAroma</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Barlow+Condensed:100,300,400,400italic,500,700,700italic,900'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css?family=Montserrat:400,400italic,500,700,700italic,900'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="login_card">
+        <img src="{% static 'images/kitchenaroma_logo_cropped.png' %}" alt="" style="width: 120px;">
+        <p style="margin-top: 10px;">Login</p>
+        <form action="" method="POST" style="display: flex; flex-direction: column; align-items: center">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input id="email" class="form-input" type="email" autocomplete="off" required name="email" />
+            </div>
+            <button id="btn-otp">Request OTP</button>
+        </form>
+        <span class="span-register">New to KitchenAroma? <a href="/register">Create account</a></span>
+        <span style="font-size: 18px; color: #fe9a65; margin-top: 10px; text-align: center;">{{ message }}</span>
+    </div>
+
+    <script>
+        function checkLength() {
+            var number = $("#phone__input").val()
+
+            if (number.length > 10) {
+                var output = []
+                var s_number = number.toString()
+
+                for (var i = 0, len = 10; i < len; i += 1) {
+                    output.push(+s_number.charAt(i));
+                }
+
+                var replace_number = output.join("")
+
+                $("#phone__input").val(parseInt(replace_number))
+            }
+        }
+
+        $('input').focus(function () {
+            $(this).parents('.form-group').addClass('focused');
+        });
+
+        $('input').blur(function () {
+            var inputValue = $(this).val();
+            if (inputValue == "") {
+                $(this).removeClass('filled');
+                $(this).parents('.form-group').removeClass('focused');
+            } else {
+                $(this).addClass('filled');
+            }
+        })
+    </script>
+</body>
+
+</html>

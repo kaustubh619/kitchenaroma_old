@@ -1,0 +1,51 @@
+{% load static %}
+<span style="color: white; display: block; text-align: justify;" class="mt-3">
+    {{ kitchen.about }}
+</span>
+<div class="mt-3">
+    <button id="order-now">Order Now</button>
+</div>
+<div class="kitchen-gallery mt-3">
+    {% for image in images %}
+    <a href="#">
+        <img class="gallery-image" src="{{ image.image.url }}" alt="">
+    </a>
+    {% endfor %}
+</div>
+<script>
+    $("#order-now").click(() => {
+        $("#content-loader").load("/order-online/" + "{{ kitchen.id }}")
+        $("#order").addClass("nav-active")
+        $("#order").siblings().removeClass("nav-active")
+    })
+</script>
+<script>
+    // $('.kitchen-gallery').slick({});
+
+    $('.kitchen-gallery').slick({
+        centerMode: true,
+        centerPadding: '60px',
+        slidesToShow: 1,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+    });
+</script>

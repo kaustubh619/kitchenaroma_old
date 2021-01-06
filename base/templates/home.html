@@ -1,0 +1,392 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina><img class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina><img class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina><img class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="#Header_wrapper"><span>START</span></a>
+                                </li>
+                                <li>
+                                    <a href="#about"><span>ABOUT US</span></a>
+                                </li>
+                                <li>
+                                    <a href="#ourmenu"><span>KITCHENS</span></a>
+                                </li>
+                                <!-- <li>
+                                    <a href="#offer"><span>SPECIAL OFFERS</span></a>
+                                </li> -->
+                                <li>
+                                    <a href="#gallery"><span>GALLERY</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+                <div class="banner_wrapper">
+                    <h4>+91 7619144111</h4>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div id="Header_wrapper">
+    <header id="Header">
+        <div class="mfn-main-slider mfn-rev-slider">
+            <p class="rs-p-wp-fix"></p>
+            <rs-module-wrap id="rev_slider_1_1_wrapper" data-source="gallery" style="background:transparent;padding:0;">
+                <rs-module id="rev_slider_1_1" style="display:none;" data-version="6.1.4">
+                    <rs-slides>
+                        <rs-slide data-key="rs-1" data-title="Slide" data-anim="ei:d;eo:d;s:1000;r:0;t:fade;sl:0;">
+                            <img src="{% static 'images/bg_new.jpg' %}" data-parallax="4" class="rev-slidebg"
+                                data-no-retina>
+                            <rs-layer id="slider-1-slide-1-layer-0" data-type="text" data-rsp_ch="on"
+                                data-xy="x:l,l,c,c;xo:80px,80px,0,80px;y:m;yo:-60px,-60px,-63px,-63px;"
+                                data-text="w:normal;s:80,80,100,100;l:80,80,100,100;ls:0,0,0px,0px;fw:700;a:left,left,center,center;"
+                                data-dim="w:auto,auto,569px,569px;" data-frame_0="x:0,0,0px,0px;y:50,50,45px,45px;"
+                                data-frame_1="x:0,0,0px,0px;y:0,0,0px,0px;st:100;sp:1000;sR:100;"
+                                data-frame_999="o:0;st:w;sR:7900;" style="z-index:8;font-family:Barlow Condensed;">
+                                KitchenAroma
+                                <br> <span class="font-responsive">STRAIGHT FROM HOME</span>
+                            </rs-layer>
+                            <a id="slider-1-slide-1-layer-1" class="rs-layer scroll rev-btn" href="#about"
+                                target="_self" rel="nofollow" data-type="button" data-rsp_ch="on"
+                                data-xy="xo:260px,260px,426px,426px;y:m;yo:137px,137px,225px,225px;"
+                                data-text="w:normal;s:17,17,23,23;l:50,50,55,55;fw:500;"
+                                data-dim="minh:0px,0px,none,0px;" data-padding="r:20,20,13,13;l:30,30,19,19;"
+                                data-frame_0="y:50,50,31,31;" data-frame_1="st:150;sp:1000;sR:150;"
+                                data-frame_999="o:0;st:w;sR:7850;"
+                                data-frame_hover="c:#fff;bgc:#b15221;bor:0px,0px,0px,0px;sp:200;e:Power1.easeInOut;"
+                                style="z-index:9;background-color:#d16832;font-family:Roboto;">
+                                ABOUT US
+                                <i class="icon-right-open-mini"></i>
+                            </a>
+                            <a id="slider-1-slide-1-layer-2" class="rs-layer scroll rev-btn" href="#ourmenu"
+                                target="_self" rel="nofollow" data-type="button" data-color="#1f2a2e" data-rsp_ch="on"
+                                data-xy="xo:80px,80px,181px,181px;y:m;yo:137px,137px,225px,225px;"
+                                data-text="w:normal;s:17,17,23,23;l:50,50,55,55;fw:500;"
+                                data-dim="minh:0px,0px,none,0px;" data-padding="r:20,20,13,13;l:30,30,19,19;"
+                                data-frame_0="y:50,50,31,31;" data-frame_1="st:200;sp:1000;sR:200;"
+                                data-frame_999="o:0;st:w;sR:7800;"
+                                data-frame_hover="c:#1f2a2e;bgc:#e8eff1;bor:0px,0px,0px,0px;sp:200;e:Power1.easeInOut;"
+                                style="z-index:10;background-color:#fff;font-family:Roboto;">
+                                Kitchens
+                                <i class="icon-right-open-mini"></i>
+                            </a>
+                        </rs-slide>
+                    </rs-slides>
+                    <rs-progress class="rs-bottom" style="visibility: hidden !important;"></rs-progress>
+                </rs-module>
+            </rs-module-wrap>
+        </div>
+    </header>
+</div>
+<div id="Content">
+    <div class="content_wrapper clearfix">
+        <div class="sections_group">
+            <div class="entry-content">
+                <div class="section mcb-section mcb-section-l66o8jiqi equal-height-wrap full-width" id="about"
+                    style="padding-top:120px">
+                    <div class="section_wrapper mcb-section-inner">
+                        <div class="wrap mcb-wrap mcb-wrap-82di8dmno one-second valign-top bg-cover clearfix"
+                            style="background-image:url(../static/images/duck-tem.webp);background-repeat:no-repeat;background-position:center;background-size:contain;">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-8uzo758hf one column_divider">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrap mcb-wrap mcb-wrap-sm011qxzb one-second valign-top clearfix"
+                            style="padding: 5px 5% 0">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-myg160lps two-third column_column">
+                                    <div class="column_attr clearfix">
+                                        <h6 class="themecolor" style="margin-bottom: 5px; font-size: 26px;">
+                                            ABOUT US</h6>
+                                        <p>
+                                            Our vision is to provide our customers with authentic assamese
+                                            cuisines right in the Silicon valley of India in an extremely pocket
+                                            friendly price.
+                                            We understand the hectic life style of every individual in the busy
+                                            city where it gets very hard to find time to cook and satisfy our
+                                            cravings.
+                                            But life is no good without home made traditional food that reminds
+                                            us of our homes and the memories related to it.
+                                        </p>
+                                        <p>Here, we will constantly try to bring Assam to Bengaluru through your
+                                            taste buds.</p>
+                                        <p>Striving to maintain the quality, quantity and taste of every item in
+                                            our menu is KitchenAroma’s first priority.</p>
+                                        <p>We will be offering you our services through the online platforms and
+                                            to make your ordering experience hassle free, we are assuring that
+                                            one of our members will always be available to understand your
+                                            specifications in the order.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section mcb-section mcb-section-c18jqszuc bg-cover"
+                    style="background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg1.png);background-repeat:no-repeat;background-position:center top">
+                    <div class="section_wrapper mcb-section-inner">
+                        <div class="wrap mcb-wrap mcb-wrap-zac5thpuu one valign-top clearfix"
+                            style="padding:90px 5% 40px;background-color:#ffffff">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-b93pfugkn one-fourth column_column">
+                                    <div class="column_attr clearfix" style="padding:0 5% 0 0;">
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-o28730xjf one-fourth column_column">
+                                    <div class="column_attr clearfix" style="padding:0 5% 0 0;">
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-ti4ck0vz8 one-fourth column_column">
+                                    <div class="column_attr clearfix" style="padding:0 5% 0 0;">
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-b0yo5825t one-fourth column_column">
+                                    <div class="column_attr clearfix" style="padding:0 5% 0 0;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover" id="ourmenu"
+                    style="padding-top:120px;padding-bottom:80px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+                    <div class="section_wrapper mcb-section-inner">
+                        <div class="wrap mcb-wrap mcb-wrap-sow8b28kb one valign-top clearfix">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-3qzk8dnv2 one column_column">
+                                    <div class="column_attr clearfix align_center">
+                                        <h6 class="themecolor" style="margin-bottom: 5px;">OUR PARTNER</h6>
+                                        <h2 style="color: #fff;">KITCHENS</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% for kitchen in kitchens %}
+                        <div class="wrap mcb-wrap mcb-wrap-f0n1tegh8 one-second valign-top clearfix">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-bdiktilz0 column_image"
+                                    style="display: contents!important;">
+                                    <div class="image_frame image_item no_link scale-with-grid aligncenter no_border">
+                                        <div class="image_wrapper">
+                                            <a href="/kitchen/{{ kitchen.slug }}">
+                                                <img class="scale-with-grid img-responsive"
+                                                    src="{{ kitchen.kitchen_logo.url }}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="wrap mcb-wrap mcb-wrap-c4f6ngpcn one valign-top clearfix">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-s8wggf45t one column_divider">
+                                    <hr class="no_line" style="margin:0 auto 50px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section mcb-section mcb-section-q5q2yqcx6 no-margin-h no-margin-v" id="gallery"
+                    style="background-color:#f6f2ef;background-image:url(../static/images/restaurant5-sectionbg4.png);background-repeat:repeat-x;background-position:center bottom">
+                    <div class="section_wrapper mcb-section-inner">
+                        <div class="wrap mcb-wrap mcb-wrap-9hvozbz2j one-second valign-top clearfix">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-vdpzv41ix one column_image">
+                                    <div class="image_frame image_item scale-with-grid no_border">
+                                        <div class="image_wrapper">
+                                            <a href="{% static 'images/1.jpg' %}" rel="prettyphoto">
+                                                <div class="mask"></div><img class="scale-with-grid"
+                                                    src="{% static 'images/1.jpg' %}">
+                                            </a>
+                                            <div class="image_links">
+                                                <a href="{% static 'images/1.jpg' %}" class="zoom" rel="prettyphoto"><i
+                                                        class="icon-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-4wnjotgw8 one-second column_column">
+                                    <div class="column_attr clearfix" style="background-color:#1f2a2e;padding:40px;">
+                                        <h6 class="themecolor" style="margin-bottom: 5px;">GALLERY</h6>
+                                        <h3><a style="color: #fff;" href="https://www.instagram.com/kitchenaroma21/"
+                                                target="_blank">SEE
+                                                OUR PHOTOS ON INSTAGRAM</a>
+                                        </h3><i class="icon-right-open-mini" style="color:#fff"></i>
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-bfntm7c5f one-second column_image">
+                                    <div class="image_frame image_item scale-with-grid no_border">
+                                        <div class="image_wrapper">
+                                            <a href="{% static 'images/4.jpg' %}" rel="prettyphoto">
+                                                <div class="mask"></div><img class="scale-with-grid"
+                                                    src="{% static 'images/4.jpg' %}">
+                                            </a>
+                                            <div class="image_links">
+                                                <a href="{% static 'images/4.jpg' %}" class="zoom" rel="prettyphoto"><i
+                                                        class="icon-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrap mcb-wrap mcb-wrap-8viydw8df one-second valign-top clearfix">
+                            <div class="mcb-wrap-inner">
+                                <div class="column mcb-column mcb-item-pk1eotf7z one-second column_image">
+                                    <div class="image_frame image_item scale-with-grid no_border">
+                                        <div class="image_wrapper">
+                                            <a href="{% static 'images/3.jpg' %}" rel="prettyphoto">
+                                                <div class="mask"></div><img class="scale-with-grid"
+                                                    src="{% static 'images/3.jpg' %}">
+                                            </a>
+                                            <div class="image_links">
+                                                <a href="{% static 'images/3.jpg' %}" class="zoom" rel="prettyphoto"><i
+                                                        class="icon-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-3qyy3x74t one-second column_image">
+                                    <div class="image_frame image_item scale-with-grid no_border">
+                                        <div class="image_wrapper">
+                                            <a href="{% static 'images/2.jpg' %}" rel="prettyphoto">
+                                                <div class="mask"></div><img class="scale-with-grid"
+                                                    src="{% static 'images/2.jpg' %}">
+                                            </a>
+                                            <div class="image_links">
+                                                <a href="{% static 'images/2.jpg' %}" class="zoom" rel="prettyphoto"><i
+                                                        class="icon-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column mcb-column mcb-item-khia7muo5 one column_image">
+                                    <div class="image_frame image_item scale-with-grid no_border">
+                                        <div class="image_wrapper">
+                                            <a href="{% static 'images/5.jpg' %}" rel="prettyphoto">
+                                                <div class="mask"></div><img class="scale-with-grid"
+                                                    src="{% static 'images/5.jpg' %}">
+                                            </a>
+                                            <div class="image_links">
+                                                <a href="{% static 'images/5.jpg' %}" class="zoom" rel="prettyphoto"><i
+                                                        class="icon-search"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="Footer" class="clearfix">
+    <div class="widgets_wrapper">
+        <div class="container">
+            <div class="column one-second">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">CONTACT US</h6>
+                        <h2>+91 7619144111</h2>
+                        <p>
+                            <a href="#">kitchenaroma21@gmail.com</a>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OPENING SOON</h6>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OUR ADDRESS</h6>
+                        <p>
+                            HSR SECTOR 2,
+                            <br> PARANGI PALYA
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.facebook.com/kitchenaroma21" target="_blank"><img
+                        src="{% static 'images/fb_icon.png' %}" alt="" style="width: 36px;"></a>
+                <a href="https://www.instagram.com/kitchenaroma21/" target="_blank"><img
+                        src="{% static 'images/insta_icon.png' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceworker.js');
+    }
+</script>
+{% endblock %}

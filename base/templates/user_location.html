@@ -1,0 +1,353 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+<style>
+    #map {
+        height: 50vh;
+        margin-top: 30px;
+    }
+
+    @media screen and (max-width: 37.5em) {
+        #map {
+            margin-top: 10px;
+        }
+
+        .container {
+            padding: 0 !important;
+            width: 90% !important;
+        }
+    }
+
+    .custom-map-control-button {
+        appearance: button;
+        background-color: white;
+        color: black;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin: 10px;
+        padding: 0 0.5em;
+        height: 40px;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+    }
+
+    .custom-map-control-button:hover {
+        background: #d16832;
+        color: white;
+    }
+
+    .gmnoprint {
+        display: none;
+    }
+
+    .gm-style .gm-style-iw-d {
+        color: black;
+    }
+</style>
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div id="map"></div>
+        </div>
+        <div class="col-12">
+            {% if request.user.gmap_address %}
+            <span
+                style="display: block; text-align: center; margin-top: 20px; color: #d16832; font-size: 24px; font-weight: 600;">Your
+                location
+            </span>
+            <span style="display: block; text-align: center; margin-top: 10px;">{{ request.user.gmap_address }}</span>
+            {% endif %}
+        </div>
+        <div class="col-12">
+            <button onclick="goBack()"
+                style="display: block; margin-left: auto; margin-right: auto; margin-top: 10px;">Go Back</button>
+        </div>
+    </div>
+</div>
+
+<footer id="Footer" class="clearfix">
+    <div class="widgets_wrapper">
+        <div class="container">
+            <div class="column one-second">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">CONTACT US</h6>
+                        <h2>+91 7619144111</h2>
+                        <p>
+                            <a href="#">kitchenaroma21@gmail.com</a>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OPENING SOON</h6>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OUR ADDRESS</h6>
+                        <p>
+                            HSR SECTOR 2,
+                            <br> PARANGI PALYA
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.facebook.com/kitchenaroma21" target="_blank"><img
+                        src="{% static 'images/fb_icon.png' %}" alt="" style="width: 36px;"></a>
+                <a href="https://www.instagram.com/kitchenaroma21/" target="_blank"><img
+                        src="{% static 'images/insta_icon.png' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceworker.js');
+    }
+</script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTsWeYUxULRj8sRROYbG9FwYwv6p_8GDE&map_ids=33564a8c0fe2cdfd&callback=initMap&libraries=&v=weekly"
+    defer></script>
+
+<script>
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+
+    let map, infoWindow, geocoder, marker;
+
+    function initMap() {
+        if ("{{ request.user.user_location_latitude }}" == "None" || "{{ request.user.user_location_longitude }}" == "None") {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: parseFloat(12.9107243), lng: parseFloat(77.650614) },
+                zoom: 13,
+                mapId: '33564a8c0fe2cdfd',
+            });
+
+            infoWindow = new google.maps.InfoWindow({
+                content: "KitchenAroma",
+            });
+
+            marker = new google.maps.Marker({
+                position: { lat: parseFloat(12.9107243), lng: parseFloat(77.650614) },
+                map,
+                title: "KitchenAroma",
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        }
+
+        else {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: parseFloat("{{ request.user.user_location_latitude }}"), lng: parseFloat("{{ request.user.user_location_longitude }}") },
+                zoom: 14,
+                mapId: '33564a8c0fe2cdfd',
+            });
+
+            infoWindow = new google.maps.InfoWindow({
+                content: "{{ request.user.gmap_address }}",
+            });
+
+            marker = new google.maps.Marker({
+                position: { lat: parseFloat("{{ request.user.user_location_latitude }}"), lng: parseFloat("{{ request.user.user_location_longitude }}") },
+                map,
+                title: "Your location",
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        }
+
+
+        geocoder = new google.maps.Geocoder();
+
+        const locationButton = document.createElement("button");
+        locationButton.textContent = "Add location for delivery";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+            locationButton
+        );
+        locationButton.addEventListener("click", () => {
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                        geocoder.geocode({ location: pos }, (results, status) => {
+                            if (status === "OK") {
+                                if (results[0]) {
+                                    infoWindow.setContent(results[0].formatted_address);
+                                    payload = {
+                                        "user_location_latitude": position.coords.latitude,
+                                        "user_location_longitude": position.coords.longitude,
+                                        "gmap_address": results[0].formatted_address
+                                    };
+                                    $.ajax({
+                                        url: "/add_user_location/" + "{{ request.user.id }}",
+                                        type: "PUT",
+                                        dataType: "json",
+                                        data: payload,
+                                        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                        success: function (data) {
+                                            alert("Address added successfully")
+                                            window.location.reload()
+                                        },
+                                        error: function (err) {
+                                            alert(JSON.stringify(err))
+                                        },
+                                    });
+                                } else {
+                                    window.alert("No results found");
+                                }
+                            } else {
+                                window.alert("Geocoder failed due to: " + status);
+                            }
+                        });
+
+                        infoWindow.setPosition(pos);
+                        // infoWindow.setContent("Kitchen Located");
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+
+
+                    },
+                    () => {
+                        handleLocationError(true, infoWindow, map.getCenter());
+                    }
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        });
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+                ? "Error: The Geolocation service failed."
+                : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(map);
+    }
+
+    function geocodeLatLng(geocoder, map, infowindow) {
+        const input = document.getElementById("latlng").value;
+        const latlngStr = input.split(",", 2);
+        const latlng = {
+            lat: parseFloat(latlngStr[0]),
+            lng: parseFloat(latlngStr[1]),
+        };
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === "OK") {
+                if (results[0]) {
+                    map.setZoom(11);
+                    const marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
+</script>
+<script>
+    function goBack() {
+        window.history.back()
+    }
+</script>
+{% endblock %}

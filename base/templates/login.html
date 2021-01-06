@@ -1,0 +1,113 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina><img class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina><img class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina><img class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/kitchenaroma_logo_cropped.png' %}" data-height="212"
+                                data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover" id="ourmenu"
+    style="min-height:90vh;padding-top:120px;padding-bottom:80px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+    <div class="section_wrapper mcb-section-inner">
+        <div class="wrap mcb-wrap mcb-wrap-sow8b28kb one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-3qzk8dnv2 one column_column">
+                    <div class="column_attr clearfix align_center">
+                        <h2 style="color: #fff; text-transform: uppercase;">LOGIN
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap mcb-wrap mcb-wrap-c4f6ngpcn one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-s8wggf45t one column_divider">
+                    <hr class="no_line" style="margin:0 auto 50px">
+                    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                        <form method="POST">{% csrf_token %}
+                            <input type="text" placeholder="Username" name="username" style="width: 320px;" required>
+                            <input type="password" placeholder="Password" name="password" style="width: 320px" required>
+                            <button style="display: block; margin: 0 auto;" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="Footer" class="clearfix">
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.facebook.com/kitchenaroma21" target="_blank"><img
+                        src="{% static 'images/fb_icon.png' %}" alt="" style="width: 36px;"></a>
+                <a href="https://www.instagram.com/kitchenaroma21/" target="_blank"><img
+                        src="{% static 'images/insta_icon.png' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+{% endblock %}
