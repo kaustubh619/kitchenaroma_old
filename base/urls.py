@@ -15,6 +15,5 @@ urlpatterns = [
     path('ratings-and-reviews/<int:pk>/<int:num>', views.ratings_and_reviews),
     path('overview/<int:pk>', views.overview),
     path('kitchen_locate/<int:pk>', views.KitchenAPIView.as_view()),
-    path('user_location', views.user_location),
-    path('.well-known/assetlinks.json', views.assetlinks)
+    path('user_location', views.user_location)
 ]

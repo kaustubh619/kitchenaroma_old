@@ -17,7 +17,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework import generics, permissions, status
-from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
@@ -234,11 +233,3 @@ class KitchenAPIView(APIView):
 @login_required(login_url="/")
 def user_location(request):
     return render(request, "user_location.html")
-
-
-def assetlinks(request):
-    f = open('.well-known/assetlinks.json', 'r')
-    file_content = f.read()
-    f.close()
-    print(f)
-    return HttpResponse(file_content, content_type="text/plain")
