@@ -385,6 +385,7 @@
 </script>
 <script>
     $("#content-loader").load("/overview/" + "{{ kitchen.id }}")
+    // $("#content-loader").load("/order-online/" + "{{ kitchen.id }}")
 
     $("#order").click(() => {
         $("#content-loader").load("/order-online/" + "{{ kitchen.id }}")
@@ -420,6 +421,9 @@
     var user_lat = "{{ request.user.user_location_latitude }}"
     var user_lon = "{{ request.user.user_location_longitude }}"
     var kitchen_cover_radius = "{{ kitchen.cover_radius_in_kms }}"
+    var kitchen_name = "{{ kitchen.kitchen_name }}"
+    var cart_items_kitchen;
+    var quantity;
 
     function cart_total() {
         var total_cart_cost = 0
@@ -483,9 +487,10 @@
                     Math.sin(dLong / 2) * Math.sin(dLong / 2);
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                 var d = (R * c) / 1000; // distance between kitchen and user in kilometers
+                console.log(d)
 
                 if (d > kitchen_cover_radius) {
-                    var result = confirm("{{ kitchen.kitchen_name }} does not deliver to your location. Do you want to change your location?");
+                    var result = confirm($('<textarea />').html(kitchen_name).text() + " does not deliver to your location. Do you want to change your location?");
                     if (result) {
                         window.location.href = "/user_location"
                     }
@@ -493,42 +498,153 @@
                         return false
                     }
                 }
-
                 else {
-                    $("#block__overlay-" + id).css("top", "40px")
-                    $("#block__underlay-" + id).css("top", "0px")
-                    $("#quantity-" + id).val(1)
-
-                    var quantity = $("#quantity-" + id).val()
-
-                    var payload = {
-                        item: id,
-                        quantity: quantity,
-                    };
                     $.ajax({
                         url: "/add_item_to_cart",
-                        type: "POST",
+                        type: "GET",
                         dataType: "json",
-                        data: payload,
                         headers: { "X-CSRFToken": $.cookie("csrftoken") },
-                        success: function () {
-                            var total_cart_cost = 0
-                            $.ajax({
-                                url: "/cart_by_user",
-                                type: "GET",
-                                dataType: "json",
-                                headers: { "X-CSRFToken": $.cookie("csrftoken") },
-                                success: function (data) {
-                                    cart_total()
-                                },
-                                error: function (err) {
-                                    alert(JSON.stringify(err))
-                                },
-                            });
-                        },
-                        error: function (err) {
-                            alert(JSON.stringify(err))
-                        },
+                        success: function (data) {
+                            if (data.length > 0) {
+                                data.map(item => {
+                                    cart_items_kitchen = item.item.category.kitchen.kitchen_name
+                                })
+
+                                if (cart_items_kitchen == $('<textarea />').html(kitchen_name).text()) {
+                                    $("#quantity-" + id).val(1)
+                                    quantity = $("#quantity-" + id).val()
+
+                                    var payload = {
+                                        item: id,
+                                        quantity: quantity,
+                                    };
+                                    $.ajax({
+                                        url: "/add_item_to_cart",
+                                        type: "POST",
+                                        dataType: "json",
+                                        data: payload,
+                                        headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                        success: function () {
+                                            var total_cart_cost = 0
+                                            $("#block__overlay-" + id).css("top", "40px")
+                                            $("#block__underlay-" + id).css("top", "0px")
+
+                                            $.ajax({
+                                                url: "/cart_by_user",
+                                                type: "GET",
+                                                dataType: "json",
+                                                headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                                success: function (data) {
+                                                    cart_total()
+                                                },
+                                                error: function (err) {
+                                                    alert(JSON.stringify(err))
+                                                },
+                                            });
+
+                                        },
+                                        error: function (err) {
+                                            alert(JSON.stringify(err))
+                                        },
+                                    });
+                                }
+                                else {
+                                    var result = confirm("Your cart contains dishes from " + $('<textarea />').html(cart_items_kitchen).text() + ". " + "Do you want to discard the selection and add dishes from " + $('<textarea />').html(kitchen_name).text() + "?")
+
+                                    if (result) {
+                                        $.ajax({
+                                            url: "/add_item_to_cart",
+                                            type: "DELETE",
+                                            dataType: "json",
+                                            headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                            success: function () {
+                                                $("#quantity-" + id).val(1)
+                                                quantity = $("#quantity-" + id).val()
+
+                                                var payload = {
+                                                    item: id,
+                                                    quantity: quantity,
+                                                };
+                                                $.ajax({
+                                                    url: "/add_item_to_cart",
+                                                    type: "POST",
+                                                    dataType: "json",
+                                                    data: payload,
+                                                    headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                                    success: function () {
+                                                        var total_cart_cost = 0
+                                                        $("#block__overlay-" + id).css("top", "40px")
+                                                        $("#block__underlay-" + id).css("top", "0px")
+
+                                                        $.ajax({
+                                                            url: "/cart_by_user",
+                                                            type: "GET",
+                                                            dataType: "json",
+                                                            headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                                            success: function (data) {
+                                                                cart_total()
+                                                            },
+                                                            error: function (err) {
+                                                                alert(JSON.stringify(err))
+                                                            },
+                                                        });
+
+                                                    },
+                                                    error: function (err) {
+                                                        alert(JSON.stringify(err))
+                                                    },
+                                                });
+
+                                            },
+                                            error: function (err) {
+                                                alert(JSON.stringify(err))
+                                            },
+                                        });
+                                    }
+                                    else {
+                                        //pass
+                                    }
+                                }
+                            }
+                            else {
+                                $("#quantity-" + id).val(1)
+                                quantity = $("#quantity-" + id).val()
+
+                                var payload = {
+                                    item: id,
+                                    quantity: quantity,
+                                };
+                                $.ajax({
+                                    url: "/add_item_to_cart",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: payload,
+                                    headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                    success: function () {
+                                        var total_cart_cost = 0
+                                        $("#block__overlay-" + id).css("top", "40px")
+                                        $("#block__underlay-" + id).css("top", "0px")
+
+                                        $.ajax({
+                                            url: "/cart_by_user",
+                                            type: "GET",
+                                            dataType: "json",
+                                            headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                                            success: function (data) {
+                                                cart_total()
+                                            },
+                                            error: function (err) {
+                                                alert(JSON.stringify(err))
+                                            },
+                                        });
+
+                                    },
+                                    error: function (err) {
+                                        alert(JSON.stringify(err))
+                                    },
+                                });
+                            }
+                        }
                     });
                 }
             }

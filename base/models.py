@@ -6,6 +6,10 @@ from user.models import CustomUser
 
 # Create your models here.
 class Kitchen(models.Model):
+    choices = (
+        ('Open', 'Open'),
+        ('Closed', 'Closed')
+    )
     user = models.OneToOneField(CustomUser, on_delete=models.PROTECT, blank=True, null=True)
     kitchen_name = models.CharField(max_length=100)
     kitchen_logo = models.ImageField(upload_to='images/kitchenlogo')
@@ -21,9 +25,10 @@ class Kitchen(models.Model):
     kitchen_longitude = models.FloatField(blank=True, null=True)
     gmap_address = models.TextField(blank=True, null=True)
     cover_radius_in_kms = models.IntegerField(blank=True, null=True)
+    status = models.CharField(choices=choices, default="Closed", max_length=100)
+
     def __str__(self):
         return str(self.kitchen_name)
-
 
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
     slug = slugify(instance.kitchen_name)
@@ -78,3 +83,44 @@ class KitchenGallery(models.Model):
 
     def __str__(self):
         return str(self.kitchen)
+
+
+class Timing(models.Model):
+    Weekdays = {
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'), 
+        ('Sunday', 'Sunday'),
+    }
+    kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE)
+    weekday = models.CharField(blank=True, null=True, max_length= 100, choices=Weekdays)
+    from_hour = models.TimeField()
+    to_hour = models.TimeField()
+
+    def __str__(self):
+        return str(self.kitchen) + " - " + str(self.weekday)
+
+
+class Order(models.Model):
+    status = (
+        ('New Order', 'New Order'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled')
+    )
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    kitchen = models.ForeignKey(Kitchen, on_delete=models.DO_NOTHING, blank=True, null=True)
+    item = models.ForeignKey(MenuItem, on_delete=models.DO_NOTHING)
+    item_price = models.FloatField()
+    quantity = models.FloatField()
+    total = models.FloatField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=100, choices=status, default="New Order")
+    razorpay_order_id = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.user) + " - " + str(self.item)
+

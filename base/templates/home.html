@@ -210,16 +210,31 @@
                             </div>
                         </div>
                         {% for kitchen in kitchens %}
-                        <div class="wrap mcb-wrap mcb-wrap-f0n1tegh8 one-second valign-top clearfix">
+                        <div class="wrap mcb-wrap mcb-wrap-f0n1tegh8 one-second valign-top clearfix"
+                            style="margin-bottom: 10px">
                             <div class="mcb-wrap-inner">
                                 <div class="column mcb-column mcb-item-bdiktilz0 column_image"
                                     style="display: contents!important;">
                                     <div class="image_frame image_item no_link scale-with-grid aligncenter no_border">
-                                        <div class="image_wrapper">
-                                            <a href="/kitchen/{{ kitchen.slug }}">
-                                                <img class="scale-with-grid img-responsive"
-                                                    src="{{ kitchen.kitchen_logo.url }}">
+                                        <div class="image_wrapper" style="position: relative;">
+                                            <a style="cursor: pointer; margin: 0 auto;"
+                                                onclick="redirectToKitchen('{{ kitchen.id }}', '{{ kitchen.slug }}', '{{ kitchen.status }}')">
+                                                <div
+                                                    style="width: 260px; height: 260px; display: block; margin: 0 auto; padding: 5px;">
+                                                    <img class="scale-with-grid img-responsive"
+                                                        src="{{ kitchen.kitchen_logo.url }}">
+                                                </div>
                                             </a>
+                                            <div style="pointer-events: none;">
+                                                {% load filtermenuitem %}
+                                                {% kitchen_status kitchen.id as status_bool %}
+                                                {% if status_bool %}
+                                                <div class="home-overlay">
+                                                    <span style="color: white; font-size: 18px;">Currently not
+                                                        taking orders</span>
+                                                </div>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -387,6 +402,11 @@
 <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('serviceworker.js');
+    }
+</script>
+<script>
+    function redirectToKitchen(id, slug, status) {
+        window.location.href = "/kitchen/" + slug
     }
 </script>
 {% endblock %}

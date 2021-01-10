@@ -48,9 +48,8 @@
         }
 
         .img-responsive {
-            margin: 10px;
-            width: 300px !important;
-            height: 300px !important;
+            width: 100% !important;
+            height: 100% !important;
             object-fit: contain;
             background-color: white;
             border-radius: 50%;
@@ -199,6 +198,23 @@
         .home_anchor:focus {
             color: #d16832;
             text-decoration: none;
+        }
+
+        .home-overlay {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            background-color: black;
+            border-radius: 300px;
+            opacity: .8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none !important;
+            z-index: 100;
         }
     </style>
     {% block style %}

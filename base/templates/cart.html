@@ -13,6 +13,7 @@
         z-index: 10;
         margin-left: auto;
         margin-right: auto;
+        margin-top: 100px;
     }
 
     .scroller {
@@ -91,18 +92,106 @@
 
     .change_phone_number {
         position: absolute;
-        top: 10000px;
+        top: -20%;
         left: 50%;
         transform: translate(-50%, -50%);
         transition: top .3s;
+        z-index: 100;
     }
 
-    .form-underlay {
+    #form-underlay {
         position: absolute;
         width: 100%;
-        height: 100vh;
-        background-color: #d7d7d7;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: black;
         z-index: 50;
+        display: none;
+        opacity: .5;
+        pointer-events: none;
+    }
+
+    .mobile-port {
+        padding-top: 120px;
+        padding-bottom: 80px;
+    }
+
+    .no_line {
+        margin: 0 auto 50px !important
+    }
+
+    .btn-custom {
+        padding: 8px 20px;
+    }
+
+    .form-label {
+        font-size: 18px;
+    }
+
+    #phone {
+        font-size: 16px !important;
+    }
+
+    .err-msg {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        min-width: 260px;
+        z-index: 300;
+        border-radius: 3px;
+        opacity: 0;
+        display: block;
+        text-align: center;
+        padding: 30px 18px;
+        font-size: 18px;
+        background-color: #E52B50;
+        animation: auto_hide 4s ease-in;
+        animation-fill-mode: forwards;
+        pointer-events: none;
+    }
+
+    .fa-phone {
+        font-size: 26px;
+        color: white;
+        background: #C19D60;
+        width: 46px;
+        height: 46px;
+        padding: 10px 14px;
+    }
+
+    @keyframes auto_hide {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @media screen and (max-width: 37.5em) {
+        .mobile-port {
+            padding: 20px;
+        }
+
+        .mousey {
+            margin-top: 70px;
+        }
+
+        .no_line {
+            margin: 0 auto 20px !important
+        }
+
+        .btn-custom {
+            padding: 8px 16px
+        }
+
+        .err-msg {
+            top: 50%;
+        }
     }
 </style>
 {% endblock %}
@@ -164,8 +253,8 @@
 </div>
 {% endblock %}
 {% block content %}
-<div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover" id="ourmenu"
-    style="min-height:90vh;padding-top:120px;padding-bottom:80px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+<div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover mobile-port" id="ourmenu"
+    style="min-height:90vh;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
     <div class="section_wrapper mcb-section-inner">
         <div class="wrap mcb-wrap mcb-wrap-sow8b28kb one valign-top clearfix">
             <div class="mcb-wrap-inner">
@@ -180,7 +269,7 @@
         </div>
         <div class="wrap mcb-wrap-f0n1tegh8 valign-top clearfix">
             <div class="mcb-wrap-inner">
-                <div class="mousey" style="margin-top: 100px;">
+                <div class="mousey">
                     <div class="scroller"></div>
                 </div>
             </div>
@@ -188,11 +277,11 @@
         <div class="wrap mcb-wrap mcb-wrap-c4f6ngpcn one valign-top clearfix">
             <div class="mcb-wrap-inner">
                 <div class="column mcb-column mcb-item-s8wggf45t one column_divider">
-                    <hr class="no_line" style="margin:0 auto 50px">
+                    <hr class="no_line">
                     <span class="text-cart">Your Cart <span style="color: #C19D60;">{{ items|length }}
                             {{ item_word }}</span></span>
                     {% if cart_bool %}
-                    <div class="row" style="display: flex;">
+                    <div class="row" style="display: flex; align-items: center;">
                         <div class="col-12 col-md-8" style="padding: 0px 4px!important;">
                             <table>
                                 <tr>
@@ -240,44 +329,36 @@
                                 </div>
                                 <span
                                     style="color: white; display: block; margin-top: 10px;">{{ request.user.phone_number }}</span>
-                                <a style="display: block; margin-top: 10px; color: #d16832; text-decoration: none;"
+                                <a href="#form-underlay"
+                                    style="display: block; margin-top: 10px; color: #d16832; text-decoration: none; cursor: pointer"
                                     id="change_phone">Change
                                     Contact Number</a>
-                                <div class="change_phone_number"
-                                    style="border-radius: 3px; background-color: white; padding: 8px 20px; z-index: 100;">
-                                    <form action="" method="POST">{% csrf_token %}
-                                        <div class="form-group">
-                                            <label class="form-label" for="phone" style="color: #C19D60">Contact
-                                                Number</label>
-                                            <input id="phone" class="form-input" type="number" autocomplete="off"
-                                                required name="phone" oninput="checkLength()"
-                                                value="{{ request.user.phone_number }}"
-                                                style="background-color: #f7f7f7;" />
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" style="padding: 4px 10px;">Update</button>
-                                        </div>
-                                    </form>
-                                </div>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-4 cart-card">
                             <div class="inner-card">
                                 <span class="text-cart" style="color: #C19D60;">Cart Totals</span>
-                                <!-- <div class="text-cart"
+                                <div class="text-cart"
                                     style="font-size: 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
                                     <span>Subtotal</span>
                                     <span>&#x20B9; {{ total_cost }}</span>
-                                </div> -->
-                                <!-- <hr style="width: 90%; border: 1px solid darkgrey;"> -->
+                                </div>
+                                <hr style="width: 90%; border: 1px solid darkgrey;">
                                 <div class="text-cart"
                                     style="font-size: 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
                                     <span>Total</span>
                                     <span>&#x20B9; {{ total_cost }}</span>
                                 </div>
                                 <hr style="width: 90%; border: 1px solid darkgrey;">
-                                <button style="display: block; margin: 30px auto;">PROCEED
+                                {% if kitchen_filter %}
+                                <button style="display: block; margin: 30px auto;" onclick="show_alert()">PROCEED
                                     TO CHECKOUT</button>
+                                {% else %}
+                                <button style="display: block; margin: 30px auto;"
+                                    onclick="proceed_to_payment()">PROCEED
+                                    TO CHECKOUT</button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -290,7 +371,27 @@
             </div>
         </div>
     </div>
-    <div class="form-underlay"></div>
+    <div class="change_phone_number"
+        style="border-radius: 3px; background-color: white; padding: 30px 40px; z-index: 100;">
+        <form action="" method="POST">{% csrf_token %}
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="phone" style="color: grey">Contact
+                    Number</label>
+                <div style="display: flex;">
+                    <i class="fa fa-phone" aria-hidden="true"></i><input id="phone" class="form-input" type="number"
+                        autocomplete="off" required name="phone" oninput="checkLength()"
+                        value="{{ request.user.phone_number }}" style="background-color: #f7f7f7;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-custom">Update</button>
+            </div>
+        </form>
+    </div>
+    <div id="form-underlay"></div>
+    {% if message %}
+    <span class="err-msg">{{ message }}</span>
+    {% endif %}
 </div>
 
 <footer id="Footer" class="clearfix">
@@ -452,8 +553,123 @@
     }
 
     $("#change_phone").click(() => {
-        $(".change_phone_number").css("top", "50%")
-        $(".wrapper").css("opacity", ".5")
+        $(".change_phone_number").css("top", "46%")
+        $("#form-underlay").css("display", "block")
+        $("#form-underlay").css("pointer-events", "all")
     })
+
+    $("#form-underlay").click(() => {
+        $(".change_phone_number").css("top", "-20%")
+        $("#form-underlay").css("display", "none")
+        $("#form-underlay").css("pointer-events", "none")
+    })
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    function proceed_to_payment() {
+        if ('{{ kitchen_status }}' == "Closed") {
+            alert($('<textarea />').html('{{ kitchen_name }}').text() + " is currently not taking orders.")
+        }
+        else {
+            $.ajax({
+                url: "/kitchen_timings/" + "{{ kitchen_id }}",
+                type: "GET",
+                dataType: "json",
+                headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                success: function (data) {
+                    var today = new Date();
+                    var weekday = new Array(7);
+                    weekday[0] = "Sunday";
+                    weekday[1] = "Monday";
+                    weekday[2] = "Tuesday";
+                    weekday[3] = "Wednesday";
+                    weekday[4] = "Thursday";
+                    weekday[5] = "Friday";
+                    weekday[6] = "Saturday";
+                    var n = weekday[today.getDay()];
+                    var hour = today.getHours()
+                    var minutes = today.getMinutes()
+                    total_time = (hour * 60) + minutes
+                    status_bool = true
+
+                    for (var i = 0; i < data.length; i++) {
+                        if (n == data[i].weekday) {
+                            var kitchen_start_hour = data[i].from_hour.split(':')[0]
+                            var kitchen_start_min = data[i].from_hour.split(':')[1]
+                            var kitchen_end_hour = data[i].to_hour.split(':')[0]
+                            var kitchen_end_min = data[i].to_hour.split(':')[1]
+                            kitchen_start_total = (parseInt(kitchen_start_hour) * 60) + parseInt(kitchen_start_min)
+                            kitchen_end_total = (parseInt(kitchen_end_hour) * 60) + parseInt(kitchen_end_min)
+
+                            if (kitchen_start_total <= total_time && total_time <= kitchen_end_total) {
+                                status_bool = true
+                                break;
+                            }
+                            else {
+                                status_bool = false
+                            }
+                        }
+                        else {
+                            status_bool = false
+                        }
+                    }
+                    if (status_bool == true) {
+                        console.log("proceed to payment")
+                        var payload = {
+                            "user_id": '{{ request.user.id }}',
+                            "payment_mode": 0,
+                            "actual_amount": '{{ total_cost }}',
+                        }
+                        $.ajax({
+                            url: "/create_order",
+                            type: "POST",
+                            dataType: 'json',
+                            headers: { "X-CSRFToken": $.cookie('csrftoken') },
+                            data: payload,
+                            success: function (data) {
+                                console.log(data)
+                                var options = {
+                                    key: 'rzp_test_2tx97L0V09FUM6',
+                                    amount: parseFloat('{{ total_cost }}') * 100,
+                                    currency: 'INR',
+                                    name: 'KitchenAroma',
+                                    description: '',
+                                    image: 'https://kitchenaroma.co.in/static/images/kitchenaroma_logo_cropped.png',
+                                    // order_id: data.order_id,
+                                    handler: function (response) {
+                                        console.log(response)
+                                    },
+                                    prefill: {
+                                        name: '',
+                                        email: '',
+                                        contact: ''
+                                    },
+                                    notes: {
+                                        address: ''
+                                    },
+                                    theme: {
+                                        color: '#d16832'
+                                    }
+                                }
+                                var rzp1 = new Razorpay(options)
+                                rzp1.open()
+                            }
+                        })
+                    }
+                    else {
+                        alert($('<textarea />').html('{{ kitchen_name }}').text() + " is currently not taking orders.")
+                    }
+                },
+                error: function (err) {
+                    alert(JSON.stringify(err))
+                },
+            });
+        }
+    }
+
+    function show_alert() {
+        kitchen_name_str = $('<textarea />').html('{{ kitchen_filter }}').text().replaceAll('[', '').replaceAll(']', '')
+        alert(kitchen_name_str + " is currently not delivering to your location.")
+    }
 </script>
 {% endblock %}

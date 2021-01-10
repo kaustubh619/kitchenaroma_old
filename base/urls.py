@@ -15,5 +15,8 @@ urlpatterns = [
     path('ratings-and-reviews/<int:pk>/<int:num>', views.ratings_and_reviews),
     path('overview/<int:pk>', views.overview),
     path('kitchen_locate/<int:pk>', views.KitchenAPIView.as_view()),
-    path('user_location', views.user_location)
+    path('user_location', views.user_location),
+    path('get_kitchen_name/<slug:slug>', views.KitchenName.as_view()),
+    path('kitchen_timings/<int:pk>', views.KitchenTimings.as_view()),
+    path('create_order', views.CreateOrder.as_view())
 ]

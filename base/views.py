@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Kitchen, Category, Cart, MenuItem, KitchenRatingsAndReviews, KitchenGallery
-from .serializers import CartSerializer, KitchenSerializer, CartSerializerWithDepth
+from .models import Kitchen, Category, Cart, MenuItem, KitchenRatingsAndReviews, KitchenGallery, Timing, Order
+from user.models import CustomUser
+from .serializers import CartSerializer, KitchenSerializer, CartSerializerWithDepth, KitchenNameSerializer, TimingSerializer, CreateOrderSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework import viewsets
 from rest_framework.decorators import permission_classes
@@ -11,32 +12,58 @@ from rest_framework.status import (
 )
 from django.http import Http404
 from django.contrib.auth.models import User
-from .models import Cart, Kitchen
+from .models import Cart, Kitchen, Timing
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework import generics, permissions, status
+from math import sin, cos, sqrt, atan2, radians
+import datetime 
+import calendar
+import razorpay
+
+razopar_client = razorpay.Client(auth=("rzp_test_AUSlqxreE099cZ","DqBd9MKiEBNaxrZ0KIhTMkxv"))
 
 # Create your views here.
 def home(request):
+    today = datetime.datetime.now().weekday()
+    day = calendar.day_name[today]
     kitchens = Kitchen.objects.all()
     context = {'kitchens': kitchens}
     return render(request, 'home.html', context)
 
 
 def kitchen(request, kitchen):
-    kitchen_obj =  Kitchen.objects.get(slug=kitchen)
-    category_obj = Category.objects.filter(kitchen=kitchen_obj)
-    context = {'kitchen': kitchen_obj, 'categories': category_obj}
+    try:
+        time = datetime.datetime.now().time()
+        today = datetime.datetime.now().weekday()
+        weekday = calendar.day_name[today]
+        kitchen_obj =  Kitchen.objects.get(slug=kitchen)
+        if kitchen_obj.status == "Open":
+            timings = Timing.objects.filter(Q(kitchen=kitchen_obj) & Q(weekday=weekday))
+            category_obj = Category.objects.filter(kitchen=kitchen_obj)
+            context = {'kitchen': kitchen_obj, 'categories': category_obj}
+            if timings.count() > 0:
+                for timing in timings:
+                    if timing.from_hour < time < timing.to_hour:
+                        # return render(request, 'kitchen.html', context)
+                        break
+                    else:
+                        return redirect("/")
+            else:
+                return redirect("/")
+        else:
+            return redirect("/")
+    except:
+        return redirect("/")
     return render(request, 'kitchen.html', context)
 
 
-@permission_classes((AllowAny,))
 class AddItemToCart(viewsets.ViewSet):
     def cart_items(self, request):
-        queryset = Cart.objects.all()
-        serializer = CartSerializer(queryset, many=True)
+        queryset = Cart.objects.filter(user=request.user)
+        serializer = CartSerializerWithDepth(queryset, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -50,6 +77,13 @@ class AddItemToCart(viewsets.ViewSet):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
+        return Response(serializer.errors)
+
+    def delete(self, request):
+        if request.user.is_authenticated:
+            user_cart_items = Cart.objects.filter(user=request.user)
+            user_cart_items.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors)
 
 
@@ -98,12 +132,49 @@ def cart(request):
     total_cost = 0        
     for item in cart_items:
         total_cost += item.item.item_price * item.quantity
+    message = ""
+    kitchen_filter = []
+    kitchens = []
+    if request.method == "POST":
+        user = request.user
+        if len(request.POST['phone']) != 10:
+            message = "Invalid Contact Number"
+        else:
+            user.phone_number = request.POST['phone']
+            user.save()
+            message = "Contact number updated successfully"
     context = {
         'items': cart_items,
         "item_word": item_word,
         "total_cost": total_cost,
-        "cart_bool": cart_bool
+        "cart_bool": cart_bool,
+        "message": message
     }
+
+    for item in cart_items:
+        lat = radians(item.item.category.kitchen.kitchen_latitude)
+        lon = radians(item.item.category.kitchen.kitchen_longitude)
+        user_lat = radians(request.user.user_location_latitude)
+        user_lon = radians(request.user.user_location_longitude)
+        R = 6378.137
+        dlon = user_lon - lon
+        dlat = user_lat - lat
+        a = (sin(dlat/2))**2 + cos(lat) * cos(user_lat) * (sin(dlon/2))**2
+        c = 2 * atan2(sqrt(a), sqrt(1-a))
+        distance = R * c
+        print(distance)
+        if item.item.category.kitchen.cover_radius_in_kms > distance:
+            kitchens.append(item.item.category.kitchen.kitchen_name)
+        else:
+            kitchen_filter.append(item.item.category.kitchen.kitchen_name)
+    try:
+        kitchen = Kitchen.objects.get(kitchen_name=kitchens[0])
+        context['kitchen_filter'] = kitchen_filter
+        context['kitchen_status'] = kitchen.status
+        context['kitchen_name'] = kitchen.kitchen_name
+        context['kitchen_id'] = kitchen.id
+    except:
+        pass    
     return render(request, "cart.html", context)
 
 
@@ -232,4 +303,76 @@ class KitchenAPIView(APIView):
 
 @login_required(login_url="/")
 def user_location(request):
-    return render(request, "user_location.html")
+    return render(request, "user_location.html") 
+
+
+class KitchenName(APIView):
+    def get_object(self, slug):
+        try:
+            return Kitchen.objects.get(slug=slug)
+        except Kitchen.DoesNotExist:
+            raise Http404
+
+    def get(self, request, slug):
+        kitchen = self.get_object(slug)
+        Kitchen = KitchenNameSerializer(kitchen, context={"request": request})
+        return Response(Kitchen.data)
+
+
+class KitchenTimings(APIView):
+    def get_object(self, pk):
+        try:
+            return Timing.objects.filter(kitchen=pk)
+        except Timing.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        timings = self.get_object(pk)
+        Timings = TimingSerializer(timings, context={"request": request}, many=True)
+        return Response(Timings.data)
+
+
+class CreateOrder(generics.CreateAPIView):
+    lookup_field = 'id'
+    serializer_class = CreateOrderSerializer
+    queryset = Order.objects.all()
+
+    def post(self, request, format=None):
+
+        response_data = {}
+        razorpay_amount = 0
+
+        actual_amount = request.data.get("actual_amount")
+
+        DATA = {'amount': int(actual_amount)*100, 'currency': 'INR', 'payment_capture': 1}
+
+        val = {}
+
+        val = razopar_client.order.create(data=DATA)
+
+        print(val)
+
+        response_data['razorpay_amount'] = actual_amount
+        response_data['message'] = 'success'
+        response_data['status'] = '200'
+        response_data['order_id'] = val['id']
+
+        user = CustomUser.objects.get(id=request.data.get("user_id"))
+        cart_items = Cart.objects.filter(user=user)
+        total = 0
+        for obj in cart_items:
+            total += (obj.item.item_price * obj.quantity)
+
+        for cart_obj in cart_items:
+            order = Order()
+            order.user = user
+            order.kitchen = cart_obj.item.category.kitchen
+            item = MenuItem.objects.get(id=cart_obj.item.id)
+            order.item = item
+            order.item_price = cart_obj.item.item_price
+            order.quantity = cart_obj.quantity
+            order.total = total
+            order.razorpay_order_id = val['id']
+            order.save()
+            cart_obj.delete()
+        return Response(response_data, status=status.HTTP_201_CREATED)        

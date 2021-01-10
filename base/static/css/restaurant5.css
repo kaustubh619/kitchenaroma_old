@@ -2191,7 +2191,7 @@ form input.display-none {
 
 @media screen and (max-width: 37.5em) {
 	#Footer .widgets_wrapper {
-		padding-top: 40px;
+		padding: 30px;
 	}
 }
 /*
