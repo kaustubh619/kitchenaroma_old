@@ -77,7 +77,8 @@
             {% csrf_token %}'
             <div id="divOuter">
                 <div id="divInner">
-                    <input name="otp" id="partitioned" type="number" oninput="checkOTP()" />
+                    <input name="otp" id="partitioned" type="number" oninput="checkOTP()" autocomplete="one-time-code"
+                        inputmode="numeric" />
                 </div>
             </div>
             <button id="btn-otp" type="submit">Submit</button>
@@ -101,6 +102,30 @@
 
                 $("#partitioned").val(parseInt(replace_number))
             }
+        }
+    </script>
+    <script>
+        if ('OTPCredential' in window) {
+            window.addEventListener('DOMContentLoaded', e => {
+                const input = document.querySelector('input[autocomplete="one-time-code"]');
+                if (!input) return;
+                const ac = new AbortController();
+                const form = input.closest('form');
+                if (form) {
+                    form.addEventListener('submit', e => {
+                        ac.abort();
+                    });
+                }
+                navigator.credentials.get({
+                    otp: { transport: ['sms'] },
+                    signal: ac.signal
+                }).then(otp => {
+                    input.value = otp.code;
+                    if (form) form.submit();
+                }).catch(err => {
+                    console.log(err);
+                });
+            });
         }
     </script>
 </body>
