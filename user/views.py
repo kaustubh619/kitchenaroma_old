@@ -17,6 +17,11 @@ from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
     HTTP_200_OK
 )
+from twilio.rest import Client
+
+account_sid = "AC9290a81e9e019044728d85eb4365b16a"
+auth_token = "7a77edc3a115642bfaf8afb666e5599a"
+client = Client(account_sid, auth_token)
 
 # Create your views here.
 def login_user(request):
@@ -35,7 +40,7 @@ def login_user(request):
                 to_email = email
                 to_list = [to_email]
                 from_email = settings.EMAIL_HOST_USER
-                send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
+                # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
                 return redirect("/login_validate/" + str(user.id))
             except:
                 validation = "User with email " + str(email) + " does not exist"
@@ -58,7 +63,7 @@ def login_validate(request, pk):
             else:
                 error_message = "Invalid OTP"
         else:
-            error_message = "Please enter a valid OTP"         
+            error_message = "Please enter a valid OTP"
     return render(request, "login_validate.html", {"error": error_message})
 
 
@@ -70,7 +75,7 @@ def register(request):
         try:
             user_exist = CustomUser.objects.get(email=email)
             message = "Account with email " + email + " already exist"
-        except:    
+        except:
             phone = request.POST['phone']
             user = CustomUser()
             user.first_name = full_name
@@ -88,9 +93,38 @@ def register(request):
             to_email = email
             to_list = [to_email]
             from_email = settings.EMAIL_HOST_USER
-            send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
+            acc_activation_code = random.randint(1111,9999)
+            user.verfication_code = acc_activation_code
+            user.save()
+            # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
             message = "You will receive an email with your account activation link"
-    return render(request, 'register.html', {"message": message})
+            
+            messages = client.messages.create(
+                     body="Your OTP is: " + str(acc_activation_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(acc_activation_code),
+                     from_='+18705282231',
+                     to= '+91' + str(phone)
+                 )
+            return redirect(otp_validation)     
+    return render(request, 'register.html', {'message': message})
+
+
+def otp_validation(request):
+    error_message = ""
+    if request.method == "POST":
+        if request.POST["otp"] != "":
+            try:
+                user = CustomUser.objects.get(verfication_code=request.POST["otp"])
+                user.is_active = True
+                user.save()
+                login(request, user)
+                return redirect("/")
+            except:
+                error_message = "Invalid OTP"
+            else:
+                error_message = "Invalid OTP"
+        else:
+            error_message = "Please enter a valid OTP"
+    return render(request, 'otp-validation.html', {"error": error_message})    
 
 
 def account_activation(request, id, token):

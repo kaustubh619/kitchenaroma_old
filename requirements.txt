@@ -24,6 +24,7 @@ razorpay==1.2.0
 requests==2.25.1
 six==1.15.0
 sqlparse==0.4.1
+twilio==6.50.1
 urllib3==1.26.2
 whitenoise==5.2.0
 wrapt==1.12.1

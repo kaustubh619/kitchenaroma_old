@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f'{self.email}'
 
-def pre_save_post_receiver_user(sender, instance, *args, **kwargs):
-    instance.verfication_code = random.randint(1111,9999)
+# def pre_save_post_receiver_user(sender, instance, *args, **kwargs):
+#     instance.verfication_code = random.randint(1111,9999)
 
-pre_save.connect(pre_save_post_receiver_user, sender=CustomUser)        
+# pre_save.connect(pre_save_post_receiver_user, sender=CustomUser)        
