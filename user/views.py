@@ -20,8 +20,8 @@ from rest_framework.status import (
 from twilio.rest import Client
 from django.views.decorators.csrf import csrf_exempt
 
-account_sid = "***"
-auth_token = "***"
+account_sid = "AC9290a81e9e019044728d85eb4365b16a"
+auth_token = "7419c359fe27d873c0cd2751d027f784"
 client = Client(account_sid, auth_token)
 
 # Create your views here.
