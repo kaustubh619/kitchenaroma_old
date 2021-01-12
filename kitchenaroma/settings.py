@@ -91,6 +91,7 @@ DATABASES = {
     }
 }
 
+USE_TZ = True
 TIME_ZONE = 'Asia/Kolkata'
 
 # Password validation
