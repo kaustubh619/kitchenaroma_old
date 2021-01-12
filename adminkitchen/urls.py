@@ -19,5 +19,4 @@ urlpatterns = [
     # Matches any html file
     # re_path(r'^.*\.*', views.pages, name='pages'),
     # path("logout_adminkitchen", LogoutView.as_view(), name="logout")
-
 ]
