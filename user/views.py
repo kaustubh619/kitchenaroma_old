@@ -20,8 +20,8 @@ from rest_framework.status import (
 from twilio.rest import Client
 from django.views.decorators.csrf import csrf_exempt
 
-account_sid = "***"
-auth_token = "***"
+account_sid = "AC9290a81e9e019044728d85eb4365b16a"
+auth_token = "7419c359fe27d873c0cd2751d027f784"
 client = Client(account_sid, auth_token)
 
 # Create your views here.
@@ -79,40 +79,43 @@ def register(request):
     message = ""
     if request.method == "POST":
         full_name = request.POST['full_name']
-        email = request.POST['email']
+        # email = request.POST['email']
+        phone = request.POST['phone']
         try:
-            user_exist = CustomUser.objects.get(email=email)
-            message = "Account with email " + email + " already exist"
+            user_exist = CustomUser.objects.get(phone_number=phone)
+            message = "Account with phone " + str(phone) + " already exist"
         except:
-            phone = request.POST['phone']
-            user = CustomUser()
-            user.first_name = full_name
-            user.email = email
-            user.phone_number = phone
-            user.is_active = False
-            user.save()
-            mail_subject = "KitchenAroma Profile Activation"
-            html_message = render_to_string('activation_template.html', {
-                "user": user,
-                'id': user.id,
-                'token': activation_token.make_token(user)
-                })
-            plain_message = strip_tags(html_message)
-            to_email = email
-            to_list = [to_email]
-            from_email = settings.EMAIL_HOST_USER
-            acc_activation_code = random.randint(1111,9999)
-            user.verfication_code = acc_activation_code
-            user.save()
-            # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
-            message = "You will receive an email with your account activation link"
+            if len(phone) != 10:
+                message = "Invalid phone number"
+            else:
+                user = CustomUser()
+                user.first_name = full_name
+                # user.email = email
+                user.phone_number = phone
+                user.is_active = False
+                user.save()
+                # mail_subject = "KitchenAroma Profile Activation"
+                # html_message = render_to_string('activation_template.html', {
+                #     "user": user,
+                #     'id': user.id,
+                #     'token': activation_token.make_token(user)
+                # })
+                # plain_message = strip_tags(html_message)
+                # to_email = email
+                # to_list = [to_email]
+                # from_email = settings.EMAIL_HOST_USER
+                acc_activation_code = random.randint(1111,9999)
+                user.verfication_code = acc_activation_code
+                user.save()
+                # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
+                # message = "You will receive an email with your account activation link"
             
-            messages = client.messages.create(
+                messages = client.messages.create(
                      body="Your OTP is: " + str(acc_activation_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(acc_activation_code),
                      from_='+18705282231',
                      to= '+91' + str(phone)
-                 )
-            return redirect(otp_validation)     
+                )
+                return redirect(otp_validation)     
     return render(request, 'register.html', {'message': message})
 
 

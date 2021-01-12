@@ -85,7 +85,10 @@
             <button id="btn-otp" type="submit">Submit</button>
         </form>
         <span class="span-register"><a href="/login">Go back to login</a></span>
-        <span style="font-size: 18px; color: rgb(237, 90, 107); margin-top: 10px;">{{ error }}</span>
+        {% if error %}
+        <span style="font-size: 20px; color: white; margin-top: 10px; text-align: center; text-transform: uppercase; 
+            background-color: #ff355e; width: 100%; padding: 10px 0;">{{ error }}</span>
+        {% endif %}
     </div>
     <script>
         function checkOTP() {

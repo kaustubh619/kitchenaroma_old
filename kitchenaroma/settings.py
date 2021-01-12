@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '&o#&qtnt336q2r@yy*=(++rhfw)fr193#f-6$#8@hfp1$g0xpe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '31.220.109.182', 'kitchenaroma.co.in', 'www.kitchenaroma.co.in']
+ALLOWED_HOSTS = ['*']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

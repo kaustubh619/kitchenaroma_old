@@ -36,7 +36,10 @@
             <button id="btn-otp">Request OTP</button>
         </form>
         <span class="span-register">New to KitchenAroma? <a href="/register">Create account</a></span>
-        <span style="font-size: 18px; color: #fe9a65; margin-top: 10px; text-align: center;">{{ message }}</span>
+        {% if message %}
+        <span style="font-size: 20px; color: white; margin-top: 10px; text-align: center; text-transform: uppercase; 
+            background-color: #ff355e; width: 100%; padding: 10px 0;">{{ message }}</span>
+        {% endif %}
     </div>
 
     <script>

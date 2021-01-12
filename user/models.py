@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     gmap_address = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.email}'
+        return f'{self.email}' + " " + str(self.first_name)
 
 # def pre_save_post_receiver_user(sender, instance, *args, **kwargs):
 #     instance.verfication_code = random.randint(1111,9999)

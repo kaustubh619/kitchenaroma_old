@@ -71,7 +71,7 @@
     <div class="login_card">
         <img src="{% static 'images/kitchenaroma_logo_cropped.png' %}" alt="" style="width: 120px;">
         <p style="margin-top: 10px;">Enter OTP</p>
-        <p style="font-size: 18px; margin-top: 10px; text-align: center;">You will receive your OTP in your
+        <p style="font-size: 18px; margin-top: 10px; text-align: center;">You will receive an OTP in your
             registered phone number</p>
         <br>
         <form action="" method="POST" style="display: flex; flex-direction: column; align-items: center">
@@ -85,7 +85,10 @@
             <button id="btn-otp" type="submit">Submit</button>
         </form>
         <!-- <span class="span-register"><a href="/login">Go back to login</a></span> -->
-        <span style="font-size: 18px; color: rgb(237, 90, 107); margin-top: 10px;">{{ error }}</span>
+        {% if error %}
+        <span style="font-size: 20px; color: white; margin-top: 10px; text-align: center; text-transform: uppercase; 
+            background-color: #ff355e; width: 100%; padding: 10px 0;">{{ error }}</span>
+        {% endif %}
     </div>
     <script>
         function checkOTP() {
