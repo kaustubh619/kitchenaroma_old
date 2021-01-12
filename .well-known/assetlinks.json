@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "kitchenaroma",
+      "package_name": "xyz.appmaker.djjkeg",
       "sha256_cert_fingerprints": ["4E:DD:F6:FB:24:A1:D5:24:CA:AD:55:1B:01:7B:1C:CA:C5:33:8F:33:E4:71:91:BF:42:FC:A5:F3:EC:B9:61:C5", "46:57:11:1A:D9:DA:4D:5A:88:B4:45:1B:3B:B3:FF:33:BE:EF:19:6C:7B:38:09:FB:30:75:EE:23:B9:36:2D:1E"]
     }
   }
