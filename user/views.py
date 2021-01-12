@@ -32,12 +32,9 @@ def login_user(request):
         validation = ""
         if request.method == "POST":
             phone = request.POST['phone']
-            print(phone)
-            # try:
-            if phone:
+            try:
                 user = CustomUser.objects.get(Q(phone_number=int(phone)) & Q(is_active=True))
-                print(user)
-                # mail_subject = "KitchenAroma Login"
+                mail_subject = "KitchenAroma Login"
                 # html_message = render_to_string('signup_template.html', {'user': user})
                 # plain_message = strip_tags(html_message)
                 # to_email = email
@@ -50,9 +47,9 @@ def login_user(request):
                      to= '+91' + str(user.phone_number)
                  )
                 return redirect("/login_validate/" + str(user.id))
-            # except:
-            #     validation = "User with phone " + str(phone) + " does not exist"
-            #     context["message"] = validation
+            except:
+                validation = "User with phone " + str(phone) + " does not exist"
+                context["message"] = validation
     return render(request, 'login.html', context)
 
 
