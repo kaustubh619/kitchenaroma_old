@@ -18,12 +18,14 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 from twilio.rest import Client
+from django.views.decorators.csrf import csrf_exempt
 
 account_sid = "***"
 auth_token = "***"
 client = Client(account_sid, auth_token)
 
 # Create your views here.
+
 def login_user(request):
     context = {}
     if request.user.is_authenticated:
@@ -53,6 +55,7 @@ def login_user(request):
     return render(request, 'login.html', context)
 
 
+@csrf_exempt
 def login_validate(request, pk):
     error_message = ""
     if request.method == "POST":
@@ -113,6 +116,7 @@ def register(request):
     return render(request, 'register.html', {'message': message})
 
 
+@csrf_exempt
 def otp_validation(request):
     error_message = ""
     if request.method == "POST":
