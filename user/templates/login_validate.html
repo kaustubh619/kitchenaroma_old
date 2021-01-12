@@ -74,7 +74,7 @@
         <p style="font-size: 18px; margin-top: 10px; text-align: center;">You will receive your OTP in your
             registered phone number</p>
         <form action="" method="POST" style="display: flex; flex-direction: column; align-items: center">
-            {% csrf_token %}'
+            {% csrf_token %}
             <div id="divOuter">
                 <div id="divInner">
                     <input name="otp" id="partitioned" type="number" oninput="checkOTP()" autocomplete="one-time-code"
