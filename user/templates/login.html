@@ -24,9 +24,14 @@
         <p style="margin-top: 10px;">Login</p>
         <form action="" method="POST" style="display: flex; flex-direction: column; align-items: center">
             {% csrf_token %}
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="form-label" for="email">Email</label>
                 <input id="email" class="form-input" type="email" autocomplete="off" required name="email" />
+            </div> -->
+            <div class="form-group">
+                <label class="form-label" for="phone">Phone</label>
+                <input id="phone" class="form-input" type="number" autocomplete="off" required name="phone"
+                    oninput="checkLength()" />
             </div>
             <button id="btn-otp">Request OTP</button>
         </form>
@@ -35,22 +40,6 @@
     </div>
 
     <script>
-        function checkLength() {
-            var number = $("#phone__input").val()
-
-            if (number.length > 10) {
-                var output = []
-                var s_number = number.toString()
-
-                for (var i = 0, len = 10; i < len; i += 1) {
-                    output.push(+s_number.charAt(i));
-                }
-
-                var replace_number = output.join("")
-
-                $("#phone__input").val(parseInt(replace_number))
-            }
-        }
 
         $('input').focus(function () {
             $(this).parents('.form-group').addClass('focused');
@@ -65,6 +54,24 @@
                 $(this).addClass('filled');
             }
         })
+    </script>
+    <script>
+        function checkLength() {
+            var number = $("#phone").val()
+
+            if (number.length > 10) {
+                var output = []
+                var s_number = number.toString()
+
+                for (var i = 0, len = 10; i < len; i += 1) {
+                    output.push(+s_number.charAt(i));
+                }
+
+                var replace_number = output.join("")
+
+                $("#phone").val(parseInt(replace_number))
+            }
+        }
     </script>
 </body>
 

@@ -19,8 +19,8 @@ from rest_framework.status import (
 )
 from twilio.rest import Client
 
-account_sid = "AC9290a81e9e019044728d85eb4365b16a"
-auth_token = "7a77edc3a115642bfaf8afb666e5599a"
+account_sid = "***"
+auth_token = "***"
 client = Client(account_sid, auth_token)
 
 # Create your views here.
@@ -31,20 +31,28 @@ def login_user(request):
     else: 
         validation = ""
         if request.method == "POST":
-            email = request.POST['email']
-            try:
-                user = CustomUser.objects.get(Q(email=email) & Q(is_active=True))
-                mail_subject = "KitchenAroma Login"
-                html_message = render_to_string('signup_template.html', {'user': user})
-                plain_message = strip_tags(html_message)
-                to_email = email
-                to_list = [to_email]
-                from_email = settings.EMAIL_HOST_USER
+            phone = request.POST['phone']
+            print(phone)
+            # try:
+            if phone:
+                user = CustomUser.objects.get(Q(phone_number=int(phone)) & Q(is_active=True))
+                print(user)
+                # mail_subject = "KitchenAroma Login"
+                # html_message = render_to_string('signup_template.html', {'user': user})
+                # plain_message = strip_tags(html_message)
+                # to_email = email
+                # to_list = [to_email]
+                # from_email = settings.EMAIL_HOST_USER
                 # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
+                messages = client.messages.create(
+                     body="Your OTP is: " + str(user.verfication_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(user.verfication_code),
+                     from_='+18705282231',
+                     to= '+91' + str(user.phone_number)
+                 )
                 return redirect("/login_validate/" + str(user.id))
-            except:
-                validation = "User with email " + str(email) + " does not exist"
-                context["message"] = validation
+            # except:
+            #     validation = "User with phone " + str(phone) + " does not exist"
+            #     context["message"] = validation
     return render(request, 'login.html', context)
 
 
