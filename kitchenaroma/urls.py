@@ -24,5 +24,6 @@ urlpatterns = [
     path('', include('base.urls')),
     path('', include('pwa.urls')),
     path('', include('user.urls')),
+    path('', include('adminkitchen.urls')),
     path('.well-known/assetlinks.json', views.assetlinks),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

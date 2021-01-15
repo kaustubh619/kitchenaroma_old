@@ -20,8 +20,8 @@ from rest_framework.status import (
 from twilio.rest import Client
 from django.views.decorators.csrf import csrf_exempt
 
-account_sid = "***"
-auth_token = "***"
+account_sid = "AC9290a81e9e019044728d85eb4365b16a"
+auth_token = "7419c359fe27d873c0cd2751d027f784"
 client = Client(account_sid, auth_token)
 
 # Create your views here.
@@ -43,11 +43,14 @@ def login_user(request):
                 # to_list = [to_email]
                 # from_email = settings.EMAIL_HOST_USER
                 # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
-                messages = client.messages.create(
-                     body="Your OTP is: " + str(user.verfication_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(user.verfication_code),
-                     from_='+18705282231',
-                     to= '+91' + str(user.phone_number)
-                 )
+                try:
+                    messages = client.messages.create(
+                        body="Your OTP is: " + str(user.verfication_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(user.verfication_code),
+                        from_='+14696091884',
+                        to= '+91' + str(user.phone_number)
+                    )
+                except:
+                    pass    
                 return redirect("/login_validate/" + str(user.id))
             except:
                 validation = "User with phone " + str(phone) + " does not exist"
@@ -109,12 +112,14 @@ def register(request):
                 user.save()
                 # send_mail(mail_subject, plain_message, from_email, to_list, html_message=html_message, fail_silently=True)
                 # message = "You will receive an email with your account activation link"
-            
-                messages = client.messages.create(
-                     body="Your OTP is: " + str(acc_activation_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(acc_activation_code),
-                     from_='+18705282231',
-                     to= '+91' + str(phone)
-                )
+                try:
+                    messages = client.messages.create(
+                        body="Your OTP is: " + str(acc_activation_code) + "." + "\n" + "@kitchenaroma.co.in #" + str(acc_activation_code),
+                        from_='+18705282231',
+                        to= '+91' + str(phone)
+                    )
+                except:
+                    pass    
                 return redirect(otp_validation)     
     return render(request, 'register.html', {'message': message})
 

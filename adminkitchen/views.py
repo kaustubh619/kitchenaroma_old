@@ -57,7 +57,10 @@ def login_adminkitchen(request):
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            user = CustomUser.objects.get(Q(username=username) & Q(password=password))
+            try:
+                user = authenticate(username=username, password=password)
+            except:
+                pass    
             if user is not None and user.is_staff==True:
                 login(request, user)
                 return redirect("/adminkitchen")
