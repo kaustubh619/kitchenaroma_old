@@ -12,7 +12,7 @@ from rest_framework.status import (
 )
 from django.http import Http404
 from django.contrib.auth.models import User
-from .models import Cart, Kitchen, Timing
+from .models import Cart, Kitchen, Timing, Contact
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
@@ -375,4 +375,26 @@ class CreateOrder(generics.CreateAPIView):
             order.razorpay_order_id = val['id']
             order.save()
             cart_obj.delete()
-        return Response(response_data, status=status.HTTP_201_CREATED)        
+        return Response(response_data, status=status.HTTP_201_CREATED)
+
+
+def contact(request):
+    message = ""
+    if request.method == "POST":
+        contact = Contact()
+        contact.full_name = request.POST["name"]
+        contact.email = request.POST["email"]
+        contact.subject = request.POST["subject"]
+        contact.message = request.POST["body"]
+        contact.save()
+        message = "Your message has been successfully sent. We will contact you very soon!"
+        return render(request, "contact.html", {"message": message})
+    return render(request, "contact.html")
+
+
+def terms(request):
+    return render(request, "terms.html")
+
+
+def privacy(request):
+    return render(request, "privacy.html")    

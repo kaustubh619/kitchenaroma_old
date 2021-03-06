@@ -18,5 +18,8 @@ urlpatterns = [
     path('user_location', views.user_location),
     path('get_kitchen_name/<slug:slug>', views.KitchenName.as_view()),
     path('kitchen_timings/<int:pk>', views.KitchenTimings.as_view()),
-    path('create_order', views.CreateOrder.as_view())
+    path('create_order', views.CreateOrder.as_view()),
+    path('contact', views.contact),
+    path('terms', views.terms),
+    path('privacy', views.privacy),
 ]

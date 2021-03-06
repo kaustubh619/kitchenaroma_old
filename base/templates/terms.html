@@ -1,0 +1,208 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+<style>
+    a {
+        color: chocolate;
+    }
+</style>
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                <li>
+                                    <a href="/contact"><span>CONTACT</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="section mcb-section mcb-section-6x4o9gmrh dark bg-cover" id="contactus"
+    style="padding-top:40px;padding-bottom:40px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+    <div class="section_wrapper mcb-section-inner">
+        <div class="wrap mcb-wrap mcb-wrap-mnklgs82w one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-myvnt8zg6 one column_column">
+                    <div class="column_attr clearfix align_center" style>
+                        <h1>Terms and conditions</h1>
+                        <p>These terms and conditions (&quot;Agreement&quot;) set forth the general terms and conditions
+                            of your use of the <a target="_blank" rel="nofollow"
+                                href="https://kitchenaroma.co.in">kitchenaroma.co.in</a> website (&quot;Website&quot;),
+                            &quot;KitchenAroma&quot; mobile application (&quot;Mobile Application&quot;) and any of
+                            their related products and services (collectively, &quot;Services&quot;). This Agreement is
+                            legally binding between you (&quot;User&quot;, &quot;you&quot; or &quot;your&quot;) and this
+                            Website operator and Mobile Application developer (&quot;Operator&quot;, &quot;we&quot;,
+                            &quot;us&quot; or &quot;our&quot;). By accessing and using the Services, you acknowledge
+                            that you have read, understood, and agree to be bound by the terms of this Agreement. If you
+                            are entering into this Agreement on behalf of a business or other legal entity, you
+                            represent that you have the authority to bind such entity to this Agreement, in which case
+                            the terms &quot;User&quot;, &quot;you&quot; or &quot;your&quot; shall refer to such entity.
+                            If you do not have such authority, or if you do not agree with the terms of this Agreement,
+                            you must not accept this Agreement and may not access and use the Services. You acknowledge
+                            that this Agreement is a contract between you and the Operator, even though it is electronic
+                            and is not physically signed by you, and it governs your use of the Services.
+                        <h2>Accounts and membership</h2>
+                        <p>If you create an account on the Services, you are responsible for maintaining the security of
+                            your account and you are fully responsible for all activities that occur under the account
+                            and any other actions taken in connection with it. We may, but have no obligation to,
+                            monitor and review new accounts before you may sign in and start using the Services.
+                            Providing false contact information of any kind may result in the termination of your
+                            account. You must immediately notify us of any unauthorized uses of your account or any
+                            other breaches of security. We will not be liable for any acts or omissions by you,
+                            including any damages of any kind incurred as a result of such acts or omissions. We may
+                            suspend, disable, or delete your account (or any part thereof) if we determine that you have
+                            violated any provision of this Agreement or that your conduct or content would tend to
+                            damage our reputation and goodwill. If we delete your account for the foregoing reasons, you
+                            may not re-register for our Services. We may block your email address and Internet protocol
+                            address to prevent further registration.</p>
+                        <h2>Links to other resources</h2>
+                        <p>Although the Services may link to other resources (such as websites, mobile applications,
+                            etc.), we are not, directly or indirectly, implying any approval, association, sponsorship,
+                            endorsement, or affiliation with any linked resource, unless specifically stated herein. We
+                            are not responsible for examining or evaluating, and we do not warrant the offerings of, any
+                            businesses or individuals or the content of their resources. We do not assume any
+                            responsibility or liability for the actions, products, services, and content of any other
+                            third parties. You should carefully review the legal statements and other conditions of use
+                            of any resource which you access through a link on the Services. Your linking to any other
+                            off-site resources is at your own risk.</p>
+                        <h2>Changes and amendments</h2>
+                        <p>We reserve the right to modify this Agreement or its terms relating to the Services at any
+                            time, effective upon posting of an updated version of this Agreement on the Services. When
+                            we do, we will revise the updated date at the bottom of this page. Continued use of the
+                            Services after any such changes shall constitute your consent to such changes.</p>
+                        <h2>Acceptance of these terms</h2>
+                        <p>You acknowledge that you have read this Agreement and agree to all its terms and conditions.
+                            By accessing and using the Services you agree to be bound by this Agreement. If you do not
+                            agree to abide by the terms of this Agreement, you are not authorized to access or use the
+                            Services.</p>
+                        <h2>Contacting us</h2>
+                        <p>If you would like to contact us to understand more about this Agreement or wish to contact us
+                            concerning any matter relating to it, you may do so via the <a target="_blank"
+                                rel="nofollow" href="https://kitchenaroma.co.in/contact">contact form</a>, send an email
+                            to &#107;itch&#101;naro&#109;&#97;&#50;1&#64;&#103;ma&#105;l&#46;c&#111;m or write a letter
+                            to #448, 25th B Main, Parangi Palaya, HSR Layout Sector 2, Bengaluru-560102, Karnataka,
+                            India.</p>
+                    </div>
+                </div>
+                <div class="column mcb-column mcb-item-790o3ny2z one column_divider">
+                    <hr class="no_line" style="margin:0 auto 60px">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="Footer" class="clearfix">
+    <div class="widgets_wrapper">
+        <div class="container">
+            <div class="column one-second">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">CONTACT US</h6>
+                        <h2>+91 7619144111</h2>
+                        <p>
+                            <a href="#">kitchenaroma21@gmail.com</a>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <!-- <h6 class="themecolor">OPENING SOON</h6> -->
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OUR ADDRESS</h6>
+                        <p>
+                            HSR SECTOR 2,
+                            <br> PARANGI PALYA
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.facebook.com/kitchenaroma21" target="_blank"><img
+                        src="{% static 'images/fb_icon.png' %}" alt="" style="width: 36px;"></a>
+                <a href="https://www.instagram.com/kitchenaroma21/" target="_blank"><img
+                        src="{% static 'images/insta_icon.png' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted ||
+            (typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            window.location.reload();
+        }
+    });
+</script>
+{% endblock %}

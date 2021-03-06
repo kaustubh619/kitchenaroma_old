@@ -1,0 +1,179 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                <li>
+                                    <a href="/contact"><span>CONTACT</span></a>
+                                </li>
+                                <li>
+                                    <a href="/terms"><span>TERMS</span></a>
+                                </li>
+                                <li>
+                                    <a href="/privacy"><span>PRIVACY</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="section mcb-section mcb-section-6x4o9gmrh dark bg-cover" id="contactus"
+    style="padding-top:120px;padding-bottom:75px;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+    <div class="section_wrapper mcb-section-inner">
+        <div class="wrap mcb-wrap mcb-wrap-mnklgs82w one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-myvnt8zg6 one column_column">
+                    <div class="column_attr clearfix align_center" style>
+                        <h2>25th B Main, Parangi Palaya
+                            <br> HSR Layout Sector 2, Bengaluru
+                            <br> Karnataka, India
+                        </h2>
+                        {% if message %}
+                        <hr class="no_line" style="margin:0 auto 50px">
+                        <h3 style="color: chocolate;">{{ message }}</h3>
+                        {% endif %}
+                        <hr class="no_line" style="margin:0 auto 50px">
+                        <a target="_blank" href="https://www.facebook.com/kitchenaroma21"
+                            class="icon_bar icon_bar_facebook icon_bar_small"><span class="t"><i
+                                    class="icon-facebook"></i></span><span class="b"><i
+                                    class="icon-facebook"></i></span></a><a
+                            href="https://www.instagram.com/kitchenaroma21/"
+                            class="icon_bar icon_bar_instagram icon_bar_small" target="_blank"><span class="t"><i
+                                    class="icon-instagram"></i></span><span class="b"><i
+                                    class="icon-instagram"></i></span></a>
+                    </div>
+                </div>
+                <div class="column mcb-column mcb-item-790o3ny2z one column_divider">
+                    <hr class="no_line" style="margin:0 auto 60px">
+                </div>
+            </div>
+        </div>
+        <div class="wrap mcb-wrap mcb-wrap-5tzpdumx7 one-third valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-x0rp9r1gk five-sixth column_column">
+                    <div class="column_attr clearfix" style>
+                        <h6><strong>Contact</strong></h6>
+                        <hr class="no_line" style="margin:0 auto 20px">
+                        <p>
+                            Email: kitchenaroma21@gmail.com
+                        </p>
+                        <p>
+                            Phone: +91 7619144111
+                        </p>
+                        <hr class="no_line" style="margin:0 auto 20px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap mcb-wrap mcb-wrap-y3yv90yzh two-third valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-14uvhkuhf one column_column">
+                    <div class="column_attr clearfix" style>
+                        <div id="contactWrapper">
+                            <form id="contactform" method="POST">{% csrf_token %}
+                                <!-- One Second (1/2) Column -->
+                                <div class="column one-second">
+                                    <input placeholder="Your name" type="text" name="name" id="name" size="40"
+                                        aria-required="true" aria-invalid="false" required />
+                                </div>
+                                <!-- One Second (1/2) Column -->
+                                <div class="column one-second">
+                                    <input placeholder="Your e-mail" type="email" name="email" id="email" size="40"
+                                        aria-required="true" aria-invalid="false" required />
+                                </div>
+                                <div class="column one">
+                                    <input placeholder="Subject" type="text" name="subject" id="subject" size="40"
+                                        aria-invalid="false" required />
+                                </div>
+                                <div class="column one">
+                                    <textarea placeholder="Message" name="body" id="body" style="width:100%;" rows="10"
+                                        aria-invalid="false" required></textarea>
+                                </div>
+                                <div class="column one">
+                                    <input type="submit" value="Send A Message">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="Footer" class="clearfix">
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted ||
+            (typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            window.location.reload();
+        }
+    });
+</script>
+{% endblock %}

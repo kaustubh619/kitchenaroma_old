@@ -124,3 +124,13 @@ class Order(models.Model):
     def __str__(self):
         return str(self.user) + " - " + str(self.item)
 
+
+class Contact(models.Model):
+    full_name = models.CharField(max_length=100)        
+    email = models.EmailField()
+    subject = models.CharField(max_length=500)
+    message = models.TextField()
+
+    def __str__(self):
+        return str(self.full_name) + ", " + str(self.email)
+
