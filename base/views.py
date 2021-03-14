@@ -345,7 +345,7 @@ class CreateOrder(generics.CreateAPIView):
             email=request.user.email,
             phone=request.user.phone_number,
             send_sms=True,
-            redirect_url="http://localhost:8000/order_history"
+            redirect_url="https://kitchenaroma.co.in/order_history"
         )
         cart_items = Cart.objects.filter(user=request.user)
         kitchen_name = request.data.get("kitchen_name")
