@@ -105,24 +105,41 @@ class Timing(models.Model):
 
 
 class Order(models.Model):
-    status = (
-        ('New Order', 'New Order'),
-        ('Delivered', 'Delivered'),
-        ('Canceled', 'Canceled')
-    )
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     kitchen = models.ForeignKey(Kitchen, on_delete=models.DO_NOTHING, blank=True, null=True)
     item = models.ForeignKey(MenuItem, on_delete=models.DO_NOTHING)
     item_price = models.FloatField()
-    quantity = models.FloatField()
+    quantity = models.IntegerField()
     total = models.FloatField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=100, choices=status, default="New Order")
-    razorpay_order_id = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return str(self.user) + " - " + str(self.item)
+
+
+class OrderTotal(models.Model):
+    status = (
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+        ('Preparing', 'Preparing'),
+        ('On The Way', 'On The Way'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled'),
+        ('Payment Incomplete', 'Payment Incomplete')
+    )
+    payment_request_id = models.CharField(max_length=200, blank=True, null=True)
+    payment_id = models.CharField(max_length=200, blank=True, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    kitchen = models.ForeignKey(Kitchen, on_delete=models.DO_NOTHING)
+    item_order = models.ManyToManyField(Order, blank=True, null=True)
+    total = models.IntegerField()
+    status = models.CharField(max_length=100, choices=status, default="Payment Incomplete")
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user)
 
 
 class Contact(models.Model):

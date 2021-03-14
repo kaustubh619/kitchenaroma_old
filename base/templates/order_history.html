@@ -1,0 +1,311 @@
+{% extends 'index_main.html' %}
+{% load static %}
+{% block style %}
+<style>
+    .card-order {
+        border: 1px solid rgb(232, 232, 232);
+        padding: 5px;
+        border-radius: 0.8rem;
+        position: relative;
+        box-shadow: rgb(228 233 235 / 20%) 0px 1rem 7rem;
+        margin: 10px;
+    }
+
+    .kitchen_logo_order {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        transform: none;
+        opacity: 1;
+        will-change: transform, opacity;
+        border-radius: inherit;
+        filter: unset;
+        transition: opacity 0.25s ease 0s, transform 0.25s ease 0s;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+
+    .QviaZ {
+        color: white;
+        margin: 0px;
+        margin-block-end: 0px;
+        font-weight: 500;
+        line-height: 1.5;
+        font-size: 1rem;
+    }
+
+    .block_kitchen_details {
+        margin-left: 20px;
+    }
+
+    .fKrJOu {
+        width: 100%;
+        height: 0px;
+        border-width: 1px 0px 0px;
+        border-right-style: initial;
+        border-bottom-style: initial;
+        border-left-style: initial;
+        border-right-color: initial;
+        border-bottom-color: initial;
+        border-left-color: initial;
+        border-image: initial;
+        border-top-style: solid;
+        border-top-color: rgb(232, 232, 232);
+    }
+
+    @media screen and (max-width: 75em) {
+        .QviaZ {
+            font-size: 13px;
+        }
+
+        .block_kitchen_details {
+            margin-left: 5px;
+        }
+
+        .kitchen_logo_order {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            transform: none;
+            opacity: 1;
+            will-change: transform, opacity;
+            border-radius: inherit;
+            filter: unset;
+            transition: opacity 0.25s ease 0s, transform 0.25s ease 0s;
+        }
+
+        .card-order {
+            margin: 0px 0px 20px 0px;
+        }
+    }
+</style>
+{% endblock %}
+{% block header %}
+<div id="Header_creative">
+    <a href="#" class="creative-menu-toggle"><i class="icon-menu-fine"></i></a>
+    <div class="creative-wrapper">
+        <div id="Top_bar">
+            <div class="one clearfix">
+                <div class="top_bar_left">
+                    <div class="logo">
+                        <a id="logo" href="/" title="BeRestaurant5 - BeTheme" data-height="212" data-padding="50"><img
+                                class="logo-main scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina><img
+                                class="logo-mobile-sticky scale-with-grid"
+                                src="{% static 'images/kitchenaroma_logo_cropped.png' %}"
+                                data-retina="{% static 'images/crop.png' %}" data-height="212" data-no-retina></a>
+                    </div>
+                    <div class="menu_wrapper">
+                        <nav id="menu">
+                            <ul id="menu-main-menu" class="menu menu-main">
+                                <li>
+                                    <a href="/"><span>HOME</span></a>
+                                </li>
+                                <li>
+                                    <a href="/contact"><span>CONTACT</span></a>
+                                </li>
+                                <li>
+                                    <a href="/terms"><span>TERMS</span></a>
+                                </li>
+                                <li>
+                                    <a href="/privacy"><span>PRIVACY</span></a>
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="/order_history"><span>ORDER HISTORY</span></a>
+                                </li>
+                                <li>
+                                    <a href="/cart">
+                                        <span><i class="icon-cart"></i>CART</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout">
+                                        <span><i class="icon-user"></i>LOGOUT</span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="/login">
+                                        <span><i class="icon-user"></i>LOGIN</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav><a class="responsive-menu-toggle" href="#"><i class="icon-menu-fine"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Action_bar" class="creative">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="section mcb-section mcb-section-zeh9lnux1 no-margin-h equal-height bg-cover mobile-port" id="ourmenu"
+    style="min-height:90vh;background-color:#1f2a2e;background-image:url(../static/images/restaurant5-sectionbg2.png);background-repeat:no-repeat;background-position:center top">
+    <div class="section_wrapper mcb-section-inner">
+        <div class="wrap mcb-wrap mcb-wrap-sow8b28kb one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-3qzk8dnv2 one column_column">
+                    <div class="column_attr clearfix align_center">
+                        <!-- <h6 class="themecolor" style="margin-bottom: 5px;">ORDER FOOD WITH HOME DELIVERY</h6> -->
+                        <h2 style="color: #fff; margin-top: 10px;">Order History
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap mcb-wrap mcb-wrap-c4f6ngpcn one valign-top clearfix">
+            <div class="mcb-wrap-inner">
+                <div class="column mcb-column mcb-item-s8wggf45t one column_divider">
+                    <div class="col-12" style="padding: 0px 4px!important; text-align: center;">
+                        <a href="/" class="home_anchor"
+                            style="display: inline-block; margin-top: 10px; margin-bottom: 10px;">Go Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="padding: 0px;">
+            <div class="row">
+                {% for obj in orders %}
+                <div class="col-md-6 col-12" style="padding: 0px;">
+                    <div class="card-order"
+                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <a href="#" style="display: flex; justify-content: center; align-items: center;">
+                            <img src="{{ obj.kitchen.kitchen_logo.url }}" alt="" class="kitchen_logo_order">
+                            <div style="display: flex; flex-direction: column;" class="block_kitchen_details">
+                                <span class="QviaZ">{{ obj.kitchen.kitchen_name }}</span>
+                                <span class="QviaZ">{{ obj.kitchen.address_line_1 }},
+                                    {{ obj.kitchen.address_line_2 }}</span>
+                            </div>
+                        </a>
+                        <hr class="fKrJOu">
+                        <span class="QviaZ">{{ obj.status }}</span>
+                        <hr class="fKrJOu">
+                        <div
+                            style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <span class="QviaZ">Total Amount</span>
+                            <span class="QviaZ">&#x20B9; {{ obj.total }}</span>
+                            <span class="QviaZ" style="margin-top: 10px;">Items</span>
+                            {% for item in obj.item_order.all %}
+                            <span class="QviaZ">{{ item.quantity }} X
+                                {{ item.item.item_name }}</span>
+                            {% endfor %}
+                            <span class="QviaZ" style="margin-top: 10px;">Ordered On</span>
+                            <span class="QviaZ">{{ obj.created_at }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer id="Footer" class="clearfix">
+    <div class="widgets_wrapper">
+        <div class="container">
+            <div class="column one-second">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">CONTACT US</h6>
+                        <h2>+91 7619144111</h2>
+                        <p>
+                            <a href="#">kitchenaroma21@gmail.com</a>
+                        </p>
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <!-- <h6 class="themecolor">OPENING SOON</h6> -->
+                    </div>
+                </aside>
+            </div>
+            <div class="column one-fourth">
+                <aside class="widget_text widget widget_custom_html">
+                    <div class="textwidget custom-html-widget">
+                        <h6 class="themecolor">OUR ADDRESS</h6>
+                        <p>
+                            HSR SECTOR 2,
+                            <br> PARANGI PALYA
+                        </p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copy">
+        <div class="container">
+            <div class="column one">
+                <a id="back_to_top" class="button button_js" href><i class="icon-up-open-big"></i></a>
+                <div class="copyright">
+                    &copy;2020 KitchenAroma
+                </div>
+            </div>
+            <div class="links">
+                <a href="https://www.facebook.com/kitchenaroma21" target="_blank"><img
+                        src="{% static 'images/fb_icon.png' %}" alt="" style="width: 36px;"></a>
+                <a href="https://www.instagram.com/kitchenaroma21/" target="_blank"><img
+                        src="{% static 'images/insta_icon.png' %}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+{% block script %}
+<script>
+    window.addEventListener("pageshow", function (event) {
+        var historyTraversal = event.persisted ||
+            (typeof window.performance != "undefined" &&
+                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Handle page restore.
+            window.location.reload();
+        }
+    });
+</script>
+<script>
+    current_location = window.location.href
+    if (current_location.includes("payment_request_id")) {
+
+        location_array = current_location.split('=')
+        payment_id = location_array[1].split('&')[0]
+        payment_request_id = location_array[3]
+        payload = {
+            "payment_id": payment_id,
+            "payment_request_id": payment_request_id
+        }
+        $.ajax({
+            url: "/edit_order",
+            type: "POST",
+            dataType: "json",
+            data: payload,
+            headers: { "X-CSRFToken": $.cookie("csrftoken") },
+            success: function (data) {
+                // window.location.reload()
+                console.log(data)
+                window.location.href = "/order_history"
+            },
+            error: function (err) {
+                alert(JSON.stringify(err))
+            },
+        });
+    }
+    else {
+        console.log("FALSE")
+    }
+</script>
+{% endblock %}

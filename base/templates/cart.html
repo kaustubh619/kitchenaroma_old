@@ -234,6 +234,9 @@
                                 </li>
                                 {% if request.user.is_authenticated %}
                                 <li>
+                                    <a href="/order_history"><span>ORDER HISTORY</span></a>
+                                </li>
+                                <li>
                                     <a href="/cart">
                                         <span><i class="icon-cart"></i>CART</span>
                                     </a>
@@ -353,11 +356,17 @@
                                     <span>Subtotal</span>
                                     <span>&#x20B9; {{ total_cost }}</span>
                                 </div>
+                                <!-- <hr style="width: 90%; border: 1px solid darkgrey;"> -->
+                                <div class="text-cart"
+                                    style="font-size: 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+                                    <span>Delivery</span>
+                                    <span>&#x20B9; 40</span>
+                                </div>
                                 <hr style="width: 90%; border: 1px solid darkgrey;">
                                 <div class="text-cart"
                                     style="font-size: 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
                                     <span>Total</span>
-                                    <span>&#x20B9; {{ total_cost }}</span>
+                                    <span>&#x20B9; {{ cost_with_delivery }}</span>
                                 </div>
                                 <hr style="width: 90%; border: 1px solid darkgrey;">
                                 {% if kitchen_filter %}
@@ -491,7 +500,6 @@
     }
 
     function deacreaseQty(id) {
-        console.log($("#quantity-" + id).val())
         if ($("#quantity-" + id).val() == 1) {
 
             $.ajax({
@@ -573,7 +581,6 @@
         $("#form-underlay").css("pointer-events", "none")
     })
 </script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://js.instamojo.com/v1/checkout.js"></script>
 <script>
     function proceed_to_payment() {
@@ -624,11 +631,10 @@
                         }
                     }
                     if (status_bool == true) {
-                        console.log("proceed to payment")
                         var payload = {
                             "user_id": '{{ request.user.id }}',
-                            "payment_mode": 0,
-                            "actual_amount": '{{ total_cost }}',
+                            "actual_amount": '{{ cost_with_delivery }}',
+                            "kitchen_name": '{{ kitchen_name }}'
                         }
                         $.ajax({
                             url: "/create_order",
@@ -638,6 +644,9 @@
                             data: payload,
                             success: function (data) {
                                 window.location.href = data.payment_request.longurl
+                            },
+                            error: function (err) {
+                                console.log(err)
                             }
                         })
                     }

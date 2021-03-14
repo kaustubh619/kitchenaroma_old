@@ -86,6 +86,9 @@
                                 </li>
                                 {% if request.user.is_authenticated %}
                                 <li>
+                                    <a href="/order_history"><span>ORDER HISTORY</span></a>
+                                </li>
+                                <li>
                                     <a href="/cart">
                                         <span><i class="icon-cart"></i>CART</span>
                                     </a>
@@ -130,8 +133,8 @@
             {% endif %}
         </div>
         <div class="col-12">
-            <button onclick="goBack()"
-                style="display: block; margin-left: auto; margin-right: auto; margin-top: 10px;">Go Back</button>
+            <button onclick="goToCart()"
+                style="display: block; margin-left: auto; margin-right: auto; margin-top: 10px;">Go To Cart</button>
         </div>
     </div>
 </div>
@@ -355,8 +358,9 @@
     }
 </script>
 <script>
-    function goBack() {
-        window.history.back()
+    function goToCart() {
+        // window.history.back()
+        window.location.href = "/cart"
     }
 </script>
 {% endblock %}

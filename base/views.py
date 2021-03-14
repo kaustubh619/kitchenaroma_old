@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Kitchen, Category, Cart, MenuItem, KitchenRatingsAndReviews, KitchenGallery, Timing, Order
+from .models import Kitchen, Category, Cart, MenuItem, KitchenRatingsAndReviews, KitchenGallery, Timing, Order, OrderTotal
 from user.models import CustomUser
 from .serializers import CartSerializer, KitchenSerializer, CartSerializerWithDepth, KitchenNameSerializer, TimingSerializer, CreateOrderSerializer
 from rest_framework.permissions import AllowAny
@@ -147,6 +147,7 @@ def cart(request):
         'items': cart_items,
         "item_word": item_word,
         "total_cost": total_cost,
+        "cost_with_delivery": total_cost + 40,
         "cart_bool": cart_bool,
         "message": message
     }
@@ -162,7 +163,6 @@ def cart(request):
         a = (sin(dlat/2))**2 + cos(lat) * cos(user_lat) * (sin(dlon/2))**2
         c = 2 * atan2(sqrt(a), sqrt(1-a))
         distance = R * c
-        print(distance)
         if item.item.category.kitchen.cover_radius_in_kms > distance:
             kitchens.append(item.item.category.kitchen.kitchen_name)
         else:
@@ -336,7 +336,6 @@ class CreateOrder(generics.CreateAPIView):
     lookup_field = 'id'
     serializer_class = CreateOrderSerializer
     queryset = Order.objects.all()
-
     def post(self, request, format=None):
         response = api.payment_request_create(
             amount=request.data.get("actual_amount"),
@@ -346,8 +345,36 @@ class CreateOrder(generics.CreateAPIView):
             email=request.user.email,
             phone=request.user.phone_number,
             send_sms=True,
-            redirect_url="https://kitchenaroma.co.in"
-        )    
+            redirect_url="http://localhost:8000/order_history"
+        )
+        cart_items = Cart.objects.filter(user=request.user)
+        kitchen_name = request.data.get("kitchen_name")
+        kitchen_obj = Kitchen.objects.get(kitchen_name=kitchen_name)
+        total_order_cost_with_delivery = 0
+        order_item_ids = []
+        for obj in cart_items:
+            order = Order()
+            order.user = request.user
+            order.kitchen = kitchen_obj
+            order.item = MenuItem.objects.get(id=obj.item.id)
+            order.item_price = order.item.item_price
+            order.quantity = obj.quantity
+            order.total = order.item.item_price * order.quantity
+            order.save()
+            order_item_ids.append(order.id)
+        order_total = OrderTotal()
+        order_total.payment_request_id = response['payment_request']['id']
+        order_total.user = request.user
+        order_total.kitchen = kitchen_obj
+        order_total.total = total_order_cost_with_delivery
+        order_total.save()
+        order_items = Order.objects.filter(pk__in=order_item_ids)
+        for item in order_items:
+            order_total.item_order.add(item)
+            total_order_cost_with_delivery += (item.total)
+        total_order_cost_with_delivery += 40    
+        order_total.total = total_order_cost_with_delivery    
+        order_total.save()
         return Response(response, status=status.HTTP_201_CREATED)
 
 
@@ -370,4 +397,31 @@ def terms(request):
 
 
 def privacy(request):
-    return render(request, "privacy.html")    
+    return render(request, "privacy.html")
+
+
+@login_required(login_url="/")
+def order_history(request):
+    orders = OrderTotal.objects.filter(user=request.user).order_by('-created_at')
+    context = {
+        "orders": orders
+    }
+    return render(request, "order_history.html", context)
+
+
+class EditOrder(generics.CreateAPIView):
+    lookup_field = 'id'
+    serializer_class = CreateOrderSerializer
+    queryset = Order.objects.all()
+    def post(self, request, format=None):
+        payment_request_id = request.data.get("payment_request_id")
+        order = OrderTotal.objects.get(payment_request_id=payment_request_id)
+        order.status = "Pending"
+        order.payment_id = request.data.get("payment_id")
+        order.save()
+        response = {}
+        response['payment_id'] = order.payment_id
+        response['payment_request_id'] = order.payment_request_id
+        cart_items = Cart.objects.filter(user=request.user)
+        cart_items.delete()
+        return Response(response, status=status.HTTP_201_CREATED)

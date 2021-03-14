@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Kitchen, Category, MenuItem, Cart, KitchenRatingsAndReviews, KitchenGallery, Timing, Order, Contact
+from .models import Kitchen, Category, MenuItem, Cart, KitchenRatingsAndReviews, KitchenGallery, Timing, Order, Contact, OrderTotal
 
 # Register your models here.
 class KitchenCategoryInline(admin.TabularInline):
@@ -38,3 +38,4 @@ admin.site.register(KitchenGallery)
 admin.site.register(Timing)
 admin.site.register(Order)
 admin.site.register(Contact)
+admin.site.register(OrderTotal)
