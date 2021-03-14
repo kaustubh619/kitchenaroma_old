@@ -21,9 +21,9 @@ from rest_framework import generics, permissions, status
 from math import sin, cos, sqrt, atan2, radians
 import datetime 
 import calendar
-import razorpay
+from instamojo_wrapper import Instamojo
 
-razopar_client = razorpay.Client(auth=("rzp_test_AUSlqxreE099cZ","DqBd9MKiEBNaxrZ0KIhTMkxv"))
+api = Instamojo(api_key="", auth_token="")
 
 # Create your views here.
 def home(request):
@@ -338,44 +338,17 @@ class CreateOrder(generics.CreateAPIView):
     queryset = Order.objects.all()
 
     def post(self, request, format=None):
-
-        response_data = {}
-        razorpay_amount = 0
-
-        actual_amount = request.data.get("actual_amount")
-
-        DATA = {'amount': int(actual_amount)*100, 'currency': 'INR', 'payment_capture': 1}
-
-        val = {}
-
-        val = razopar_client.order.create(data=DATA)
-
-        print(val)
-
-        response_data['razorpay_amount'] = actual_amount
-        response_data['message'] = 'success'
-        response_data['status'] = '200'
-        response_data['order_id'] = val['id']
-
-        user = CustomUser.objects.get(id=request.data.get("user_id"))
-        cart_items = Cart.objects.filter(user=user)
-        total = 0
-        for obj in cart_items:
-            total += (obj.item.item_price * obj.quantity)
-
-        for cart_obj in cart_items:
-            order = Order()
-            order.user = user
-            order.kitchen = cart_obj.item.category.kitchen
-            item = MenuItem.objects.get(id=cart_obj.item.id)
-            order.item = item
-            order.item_price = cart_obj.item.item_price
-            order.quantity = cart_obj.quantity
-            order.total = total
-            order.razorpay_order_id = val['id']
-            order.save()
-            cart_obj.delete()
-        return Response(response_data, status=status.HTTP_201_CREATED)
+        response = api.payment_request_create(
+            amount=request.data.get("actual_amount"),
+            buyer_name=request.user.first_name,
+            purpose='KitchenAroma Food Delivery',
+            send_email=False,
+            email=request.user.email,
+            phone=request.user.phone_number,
+            send_sms=True,
+            redirect_url="https://kitchenaroma.co.in"
+        )    
+        return Response(response, status=status.HTTP_201_CREATED)
 
 
 def contact(request):

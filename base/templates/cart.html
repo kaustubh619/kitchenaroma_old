@@ -574,6 +574,7 @@
     })
 </script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://js.instamojo.com/v1/checkout.js"></script>
 <script>
     function proceed_to_payment() {
         if ('{{ kitchen_status }}' == "Closed") {
@@ -636,32 +637,7 @@
                             headers: { "X-CSRFToken": $.cookie('csrftoken') },
                             data: payload,
                             success: function (data) {
-                                console.log(data)
-                                var options = {
-                                    key: 'rzp_test_2tx97L0V09FUM6',
-                                    amount: parseFloat('{{ total_cost }}') * 100,
-                                    currency: 'INR',
-                                    name: 'KitchenAroma',
-                                    description: '',
-                                    image: 'https://kitchenaroma.co.in/static/images/kitchenaroma_logo_cropped.png',
-                                    // order_id: data.order_id,
-                                    handler: function (response) {
-                                        console.log(response)
-                                    },
-                                    prefill: {
-                                        name: '',
-                                        email: '',
-                                        contact: ''
-                                    },
-                                    notes: {
-                                        address: ''
-                                    },
-                                    theme: {
-                                        color: '#d16832'
-                                    }
-                                }
-                                var rzp1 = new Razorpay(options)
-                                rzp1.open()
+                                window.location.href = data.payment_request.longurl
                             }
                         })
                     }
