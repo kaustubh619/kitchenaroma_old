@@ -3,6 +3,11 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.conf import settings
 from user.models import CustomUser
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+import json
 
 # Create your models here.
 class Kitchen(models.Model):
@@ -132,7 +137,7 @@ class OrderTotal(models.Model):
     payment_id = models.CharField(max_length=200, blank=True, null=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     kitchen = models.ForeignKey(Kitchen, on_delete=models.DO_NOTHING)
-    item_order = models.ManyToManyField(Order, blank=True, null=True)
+    item_order = models.ManyToManyField(Order, blank=True)
     total = models.IntegerField()
     status = models.CharField(max_length=100, choices=status, default="Payment Incomplete")
     created_at=models.DateTimeField(auto_now_add=True)
@@ -140,6 +145,21 @@ class OrderTotal(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+@receiver(post_save, sender=OrderTotal)
+def order_status_handler(sender, instance, created, **kwargs):
+    if not created:
+        channel_layer = get_channel_layer()
+        data = {}
+        data = {
+            "status": instance.status
+        }
+        async_to_sync(channel_layer.group_send)(
+            'user_%s' % instance.user.id, {
+                'type': 'order_status',
+                'value': json.dumps(data)
+            }
+        )        
 
 
 class Contact(models.Model):

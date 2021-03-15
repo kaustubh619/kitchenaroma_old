@@ -46,7 +46,7 @@
                                 </li>
                                 {% if request.user.is_authenticated %}
                                 <li>
-                                    <a href="/order_history"><span>ORDER HISTORY</span></a>
+                                    <a href="/order_history/{{ request.user.id }}"><span>ORDER HISTORY</span></a>
                                 </li>
                                 <li>
                                     <a href="/cart">

@@ -401,8 +401,9 @@ def privacy(request):
 
 
 @login_required(login_url="/")
-def order_history(request):
-    orders = OrderTotal.objects.filter(user=request.user).order_by('-created_at')
+def order_history(request, pk):
+    user = CustomUser.objects.get(id=pk)
+    orders = OrderTotal.objects.filter(user=user).order_by('-created_at')
     context = {
         "orders": orders
     }

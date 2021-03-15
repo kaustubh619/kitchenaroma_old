@@ -22,6 +22,6 @@ urlpatterns = [
     path('contact', views.contact),
     path('terms', views.terms),
     path('privacy', views.privacy),
-    path('order_history', views.order_history),
+    path('order_history/<int:pk>', views.order_history),
     path('edit_order', views.EditOrder.as_view()),
 ]

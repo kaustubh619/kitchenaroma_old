@@ -34,6 +34,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'user',
     'base',
     'adminkitchen',
@@ -76,7 +77,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'kitchenaroma.wsgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+# WSGI_APPLICATION = 'kitchenaroma.wsgi.application'
+ASGI_APPLICATION = 'kitchenaroma.routing.application'
 
 
 # Database

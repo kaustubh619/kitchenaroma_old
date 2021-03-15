@@ -121,7 +121,7 @@
                                 </li>
                                 {% if request.user.is_authenticated %}
                                 <li>
-                                    <a href="/order_history"><span>ORDER HISTORY</span></a>
+                                    <a href="/order_history/{{ request.user.id }}"><span>ORDER HISTORY</span></a>
                                 </li>
                                 <li>
                                     <a href="/cart">
@@ -191,7 +191,7 @@
                             </div>
                         </a>
                         <hr class="fKrJOu">
-                        <span class="QviaZ">{{ obj.status }}</span>
+                        <span class="QviaZ" id="status-{{ obj.id }}">{{ obj.status }}</span>
                         <hr class="fKrJOu">
                         <div
                             style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
@@ -295,8 +295,6 @@
             data: payload,
             headers: { "X-CSRFToken": $.cookie("csrftoken") },
             success: function (data) {
-                // window.location.reload()
-                console.log(data)
                 window.location.href = "/order_history"
             },
             error: function (err) {
@@ -305,7 +303,44 @@
         });
     }
     else {
-        console.log("FALSE")
+        console.log("NO PAYMENT REQUEST ID")
+    }
+</script>
+<script>
+    var user = "{{ request.user }}"
+
+    var loc = window.location
+
+    var wsStart = "ws://"
+
+    if (loc.protocol == "https:") {
+        wsStart = "wss://"
+    }
+
+    var endpoint = wsStart + loc.host + loc.pathname
+
+    console.log(endpoint)
+
+    var socket = new WebSocket(endpoint)
+
+    socket.onopen = function (e) {
+        console.log("CONNECTION OPEN")
+    }
+    socket.onerror = function (e) {
+        console.log("error", e)
+    }
+    socket.onmessage = function (e) {
+        console.log("RECEIVING CONNECTION ", e)
+        obj = JSON.parse(e.data)
+        var p = obj.order_status
+
+        for (var key of Object.keys(p)) {
+            console.log(key + " -> " + p[key])
+            $("#status-" + key).html(p[key])
+        }
+    }
+    socket.onclose = function (e) {
+        console.log("close ", e)
     }
 </script>
 {% endblock %}
